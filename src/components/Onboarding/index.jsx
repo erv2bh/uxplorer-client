@@ -1,10 +1,14 @@
 import styled from "styled-components";
+import usePostGoogleLogin from "../../apis/usePostGoogleLogin";
+
 
 function Onboarding() {
+  const fetchGoogleLogin = usePostGoogleLogin();
+
   return (
     <Container>
       <Logo src="/assets/uxplorer-logo.png" alt="UXplorer Logo" />
-      <Button>기업 로그인</Button>
+      <Button onClick={() => fetchGoogleLogin()}>기업 로그인</Button>
       <Button>테스터 로그인</Button>
     </Container>
   );
