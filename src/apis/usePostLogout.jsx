@@ -4,7 +4,7 @@ import { useSetAtom } from "jotai";
 
 import fetchData from "../utils/axios";
 
-import userAtom from "../atoms/atoms";
+import { userAtom } from "../atoms/atoms";
 
 function useLogout() {
   const navigate = useNavigate();

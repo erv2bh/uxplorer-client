@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSetAtom } from "jotai";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-import userAtom from "../atoms/atoms";
+import { userAtom } from "../atoms/atoms";
 import { firebaseAuth } from "../app/firebaseAuth";
 
 import fetchData from "../utils/axios";
