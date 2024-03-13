@@ -1,5 +1,11 @@
 import { atom } from "jotai";
 
-const userAtom = atom("");
+export const userAtom = atom("");
 
-export default userAtom;
+export const testDetailAtom = atom({
+  testName: "",
+  testDescription: "",
+  testUrl: "",
+  testerEmails: [],
+  testDeadline: "",
+});
