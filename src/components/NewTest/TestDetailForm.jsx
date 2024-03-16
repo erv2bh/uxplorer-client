@@ -5,8 +5,7 @@ import { useAtom } from "jotai";
 import styled from "styled-components";
 import { testDetailAtom } from "../../atoms/atoms";
 
-
-function TestDetail() {
+function TestDetailForm() {
   const [testDetail, setTestDetail] = useAtom(testDetailAtom);
   const [participantCount, setParticipantCount] = useState(1);
   const [emails, setEmails] = useState([""]);
@@ -298,4 +297,4 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default TestDetail;
+export default TestDetailForm;
