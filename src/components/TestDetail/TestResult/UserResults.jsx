@@ -35,9 +35,11 @@ function UserResults() {
       </SelectContainer>
       {!isLoading &&
         filteredMissionDetails &&
-        filteredMissionDetails.map((mission) => (
+        filteredMissionDetails.map((mission, index) => (
           <MissionDetail key={mission.missionId}>
-            <MissionTitle>미션 설명: {mission.description}</MissionTitle>
+            <MissionTitle>
+              {`미션 ${index + 1}`}: {mission.description}
+            </MissionTitle>
             <MissionText>
               완료 여부: {mission.completed ? "완료됨" : "미완료"}
             </MissionText>
