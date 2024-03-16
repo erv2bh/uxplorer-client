@@ -5,6 +5,7 @@ import { useSetAtom } from "jotai";
 import fetchData from "../utils/axios";
 
 import { userAtom } from "../atoms/atoms";
+import Loading from "../components/shared/Loading";
 
 function useLogout() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function useLogout() {
     await fetchData("POST", "/auth/logout");
   }
 
-  const { mutate: fetchLogout } = useMutation({
+  const { mutate: fetchLogout, isLoading } = useMutation({
     mutationFn: handleGoogleLogout,
     onSuccess: () => {
       setUser("");
@@ -24,6 +25,10 @@ function useLogout() {
       navigate("/");
     },
   });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return fetchLogout;
 }

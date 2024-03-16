@@ -7,6 +7,7 @@ import { userAtom } from "../atoms/atoms";
 import { firebaseAuth } from "../app/firebaseAuth";
 
 import fetchData from "../utils/axios";
+import Loading from "../components/shared/Loading";
 
 function usePostGoogleLogin() {
   const navigate = useNavigate();
@@ -27,15 +28,18 @@ function usePostGoogleLogin() {
     return response;
   }
 
-  const { mutate: fetchGoogleLogin } = useMutation({
+  const { mutate: fetchGoogleLogin, isLoading } = useMutation({
     mutationFn: handleGoogleLogin,
     onSuccess: (result) => {
       const { data } = result;
-
       setUser(data.userInfo);
       navigate("/dashboard");
     },
   });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return fetchGoogleLogin;
 }
