@@ -3,6 +3,12 @@ import { atomWithStorage } from "jotai/utils";
 
 export const userAtom = atomWithStorage("userInfo", "");
 
+export const currentTestIdAtom = atom("");
+export const currentTestTitleAtom = atom("");
+export const currentTestDataAtom = atom("");
+export const missionsDataAtom = atom([]);
+export const testerEmailsDataAtom = atom([]);
+
 export const testDetailAtom = atom({
   testName: "",
   testDescription: "",
