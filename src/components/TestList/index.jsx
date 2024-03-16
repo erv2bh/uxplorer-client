@@ -1,18 +1,18 @@
 import styled from "styled-components";
+import useGetAllTests from "../../apis/useGetAllTests";
 
 function TestList() {
-  const tests = [];
+  const { createdTests } = useGetAllTests();
 
   return (
     <Container>
-      {tests.length > 0 ? (
-        tests.map((test) => (
-          <TestCard key={test.id}>
-            <h3>{test.name}</h3>
-            <p>{test.url}</p>
-            <p>{test.headCount}</p>
-            <p>{test.completedAt}</p>
-            <p>{test.isProgressing.toString()}</p>
+      {createdTests?.length > 0 ? (
+        createdTests.map((test) => (
+          <TestCard key={test._id}>
+            <h3>{test.title}</h3>
+            <p>{test.testUrl}</p>
+            <p>{test.testers.length}</p>
+            <p>{test.deadline}</p>
           </TestCard>
         ))
       ) : (
