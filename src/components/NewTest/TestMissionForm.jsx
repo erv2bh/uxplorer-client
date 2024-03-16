@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import { testDetailAtom, missionAtom } from "../../atoms/atoms";
 
-function TestMission() {
+function TestMissionForm() {
   const [missions, setMissions] = useAtom(missionAtom);
   const testDetail = useAtomValue(testDetailAtom);
   const navigate = useNavigate();
@@ -229,4 +229,4 @@ const AlertMessage = styled.p`
   margin: 20px 0;
 `;
 
-export default TestMission;
+export default TestMissionForm;
