@@ -13,15 +13,15 @@ function usePostTest() {
   const missions = useAtomValue(missionAtom);
   const { userId } = useAtomValue(userAtom);
   const navigate = useNavigate();
+
   const payload = {
     ...testDetail,
     missions,
   };
-  console.log(payload);
+
   async function saveTest() {
     const response = await fetchData("POST", `/users/${userId}/tests`, payload);
-    // navigate("/dashboard");
-    console.log("usePostTest: ", response);
+
     return response;
   }
 
