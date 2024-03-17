@@ -9,7 +9,7 @@ import {
   currentTestDataAtom,
   currentTestTitleAtom,
   missionsDataAtom,
-  testerEmailsDataAtom,
+  testerDataAtom,
 } from "../atoms/atoms";
 
 import Loading from "../components/shared/Loading";
@@ -21,7 +21,7 @@ function useGetSingleTest() {
   const setCurrentTestData = useSetAtom(currentTestDataAtom);
   const setMissionsData = useSetAtom(missionsDataAtom);
   const setCurrentTestTitle = useSetAtom(currentTestTitleAtom);
-  const setTesterEmailsDataAtom = useSetAtom(testerEmailsDataAtom);
+  const setTesterDataAtom = useSetAtom(testerDataAtom);
 
   async function getSingleTest() {
     const response = await fetchData("GET", `users/${userId}/tests/${testId}`);
@@ -29,7 +29,7 @@ function useGetSingleTest() {
     setCurrentTestData(response.data.test);
     setCurrentTestTitle(response.data.test.title);
     setMissionsData(response.data.missions);
-    setTesterEmailsDataAtom(response.data.testerEmailsAndIds);
+    setTesterDataAtom(response.data.testerData);
 
     return response.data;
   }
