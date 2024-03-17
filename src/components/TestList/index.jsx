@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { currentTestIdAtom } from "../../atoms/atoms";
 
 import useGetAllTests from "../../apis/useGetAllTests";
+import formatDate from "../../utils/formatDate";
 
 function TestList() {
   const setCurrentTestId = useSetAtom(currentTestIdAtom);
@@ -28,7 +29,7 @@ function TestList() {
             <h3>{test.title}</h3>
             <p>{test.testUrl}</p>
             <p>{test.testers.length}</p>
-            <p>{test.deadline}</p>
+            <p>{formatDate(test.deadline)}</p>
           </TestCard>
         ))
       ) : (

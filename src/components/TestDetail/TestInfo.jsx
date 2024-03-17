@@ -2,15 +2,16 @@ import { useAtomValue } from "jotai";
 
 import styled from "styled-components";
 
+import formatDate from "../../utils/formatDate";
 import {
   currentTestDataAtom,
   missionsDataAtom,
-  testerEmailsDataAtom,
+  testerDataAtom,
 } from "../../atoms/atoms";
 
 function TestInfo() {
   const testDetail = useAtomValue(currentTestDataAtom);
-  const testerEmails = useAtomValue(testerEmailsDataAtom);
+  const testerEmails = useAtomValue(testerDataAtom);
   const missions = useAtomValue(missionsDataAtom);
 
   return (
@@ -38,7 +39,7 @@ function TestInfo() {
 
       <TestDetail>
         <DetailTitle>테스트 마감 날짜</DetailTitle>
-        <DetailText>{testDetail.deadline}</DetailText>
+        <DetailText>{formatDate(testDetail.deadline)}</DetailText>
       </TestDetail>
 
       <MissionContainer>
