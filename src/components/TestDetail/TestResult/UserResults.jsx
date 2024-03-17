@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useAtomValue } from "jotai";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { testerEmailsDataAtom } from "../../../atoms/atoms";
+import { testerDataAtom } from "../../../atoms/atoms";
 import useGetTesterMissions from "../../../apis/useGetTesterMissions";
 
 function UserResults() {
   const { testId } = useParams();
-  const testerEmailsAndIds = useAtomValue(testerEmailsDataAtom);
+  const testerEmailsAndIds = useAtomValue(testerDataAtom);
   const [selectedTesterId, setSelectedTesterID] = useState("");
+  const [selectedTesterVideo, setSelectedTesterVideo] = useState("");
   const { data: filteredMissionDetails, isLoading } = useGetTesterMissions(
     selectedTesterId,
     testId,
@@ -18,7 +19,9 @@ function UserResults() {
     const selectedTester = testerEmailsAndIds.find(
       (tester) => tester.testerEmail === event.target.value,
     );
-    setSelectedTesterID(selectedTester.testerId);
+
+    setSelectedTesterID(selectedTester?.testerId);
+    setSelectedTesterVideo(selectedTester?.testerVideo);
   }
 
   return (
@@ -33,6 +36,11 @@ function UserResults() {
           ))}
         </Select>
       </SelectContainer>
+      {selectedTesterVideo && (
+        <VideoButton onClick={() => window.open(selectedTesterVideo, "_blank")}>
+          녹화영상 보기
+        </VideoButton>
+      )}
       {!isLoading &&
         filteredMissionDetails &&
         filteredMissionDetails.map((mission, index) => (
@@ -82,6 +90,19 @@ const Select = styled.select`
   border: 1px solid #ccc;
   font-size: 16px;
   cursor: pointer;
+`;
+
+const VideoButton = styled.button`
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: #45a049;
+  }
 `;
 
 const MissionDetail = styled.div`
