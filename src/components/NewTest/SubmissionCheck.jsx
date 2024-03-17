@@ -66,11 +66,11 @@ function SubmissionCheck() {
           <FormGroup key={missionDetail.id}>
             <FormGroup>
               <Label>미션 {index + 1}:</Label>
-              <div>{missionDetail.mission}</div>
+              <div>{missionDetail.description}</div>
             </FormGroup>
             <FormGroup>
               <Label>예상 소요시간:</Label>
-              <div>{missionDetail.estimatedTime} 초</div>
+              <div>{missionDetail.expectedDuration} 초</div>
             </FormGroup>
           </FormGroup>
         ))}
