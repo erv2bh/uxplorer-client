@@ -1,3 +1,5 @@
+import { Outlet } from "react-router-dom";
+
 import styled from "styled-components";
 
 import useGetTestURL from "../../apis/useGetTestURL";
@@ -6,9 +8,12 @@ function TestExecution() {
   const { testUrl } = useGetTestURL();
 
   return (
-    <Container>
-      <Frame src={testUrl} title="Test Execution Frame"></Frame>
-    </Container>
+    <>
+      <Container>
+        <Frame src={testUrl} title="Test Execution Frame"></Frame>
+      </Container>
+      <Outlet />
+    </>
   );
 }
 
