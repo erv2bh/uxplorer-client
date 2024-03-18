@@ -7,6 +7,10 @@ export const currentTestIdAtom = atom("");
 export const currentTestTitleAtom = atom("");
 export const currentTestDataAtom = atom("");
 export const missionsDataAtom = atom([]);
+
+export const testerMissionsDataAtom = atom([]);
+export const currentMission = atom([]);
+
 export const testerDataAtom = atom([]);
 
 export const testDetailAtom = atom({
