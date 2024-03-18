@@ -16,6 +16,8 @@ import TestInfo from "../components/TestDetail/TestInfo";
 import TestResult from "../components/TestDetail/TestResult";
 import UserResults from "../components/TestDetail/TestResult/UserResults";
 import TotalResults from "../components/TestDetail/TestResult/TotalResult";
+import Login from "../components/Login";
+import UserTest from "../components/UserTest";
 
 function App() {
   const user = useAtomValue(userAtom);
@@ -42,7 +44,8 @@ function App() {
             </Route>
           </>
         )}
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/test/:testerId" element={<UserTest />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );
