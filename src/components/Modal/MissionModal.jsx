@@ -9,11 +9,13 @@ import { useAtomValue } from "jotai";
 import styled from "styled-components";
 
 import useGetSingleMission from "../../apis/useGetSingleMission";
+import usePutTesterMission from "../../apis/usePutTesterMission";
 
 import { currentMission, testerMissionsDataAtom } from "../../atoms/atoms";
 
 function MissionModal() {
   useGetSingleMission();
+  const updateMissionData = usePutTesterMission();
 
   const navigate = useNavigate();
   const { testerId, missionId } = useParams();
@@ -48,24 +50,49 @@ function MissionModal() {
     setIsFeedbackOpen(false);
   }
 
-  function handleNextMission() {
+  function navigateToNextMission() {
     const nextMissionIndex = currentMissionIndex + 1;
     if (nextMissionIndex < missionIds.length) {
       const nextMissionId = missionIds[nextMissionIndex];
       setMissionTime(0);
 
       navigate(`/test/${testerId}/mission/${nextMissionId}`);
+    } else {
+      navigate(`/test/${testerId}/survey`);
     }
   }
 
-  function handleSkipMission() {
-    const nextMissionIndex = currentMissionIndex + 1;
-    if (nextMissionIndex < missionIds.length) {
-      const nextMissionId = missionIds[nextMissionIndex];
-      setMissionTime(0);
+  function handleNextMission() {
+    const now = new Date();
+    const missionCompletionData = {
+      completed: true,
+      createdAt: new Date(now - missionTime * 1000),
+      completedAt: now,
+      duration: missionTime,
+      feedback,
+    };
 
-      navigate(`/test/${testerId}/mission/${nextMissionId}`);
-    }
+    updateMissionData(missionCompletionData, {
+      onSuccess: () => {
+        navigateToNextMission();
+      },
+    });
+  }
+
+  function handleSkipMission() {
+    const now = new Date();
+    const skippedMissionData = {
+      completed: false,
+      createdAt: new Date(now - missionTime * 1000),
+      completedAt: now,
+      feedback,
+    };
+
+    updateMissionData(skippedMissionData, {
+      onSuccess: () => {
+        navigateToNextMission();
+      },
+    });
   }
 
   return (
