@@ -18,6 +18,8 @@ import UserResults from "../components/TestDetail/TestResult/UserResults";
 import TotalResults from "../components/TestDetail/TestResult/TotalResult";
 import Login from "../components/Login";
 import UserTest from "../components/UserTest";
+import TestExecution from "../components/UserTest/TestExecution";
+import MissionModal from "../components/Modal/MissionModal";
 
 function App() {
   const user = useAtomValue(userAtom);
@@ -44,7 +46,11 @@ function App() {
             </Route>
           </>
         )}
-        <Route path="/test/:testerId" element={<UserTest />} />
+        <Route path="/test/:testerId" element={<UserTest />}>
+          <Route path="mission" element={<TestExecution />}>
+            <Route path=":missionId" element={<MissionModal />} />
+          </Route>
+        </Route>
         <Route path="/login" element={<Login />} />
       </Routes>
     </>

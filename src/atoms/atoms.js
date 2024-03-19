@@ -28,3 +28,5 @@ export const missionAtom = atom([
     expectedDuration: "",
   },
 ]);
+
+export const screenRecorderAtom = atomWithStorage("isScreenRecording", "");
