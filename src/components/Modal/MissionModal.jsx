@@ -11,7 +11,11 @@ import styled from "styled-components";
 import useGetSingleMission from "../../apis/useGetSingleMission";
 import usePutTesterMission from "../../apis/usePutTesterMission";
 
-import { currentMission, testerMissionsDataAtom } from "../../atoms/atoms";
+import {
+  currentMission,
+  screenRecorderAtom,
+  testerMissionsDataAtom,
+} from "../../atoms/atoms";
 
 function MissionModal() {
   useGetSingleMission();
@@ -25,6 +29,7 @@ function MissionModal() {
   const [missionTime, setMissionTime] = useState(0);
   const missionIds = useAtomValue(testerMissionsDataAtom);
   const data = useAtomValue(currentMission);
+  const screenRecorder = useAtomValue(screenRecorderAtom);
   const [position, setPosition] = useSpring(() => ({ x: 0, y: 0 }));
 
   const DraggableModal = animated(ModalContent);
@@ -58,6 +63,8 @@ function MissionModal() {
 
       navigate(`/test/${testerId}/mission/${nextMissionId}`);
     } else {
+      screenRecorder.stop();
+
       navigate(`/test/${testerId}/survey`);
     }
   }
