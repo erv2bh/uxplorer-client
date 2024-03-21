@@ -16,6 +16,13 @@ function TestList() {
     setCurrentTestId(clickedTestId);
   }
 
+  function hasDeadlinePassed(deadline) {
+    const today = new Date();
+    const deaelineData = new Date(deadline);
+
+    return deaelineData < today;
+  }
+
   return (
     <Container>
       {createdTests?.length > 0 ? (
@@ -30,6 +37,17 @@ function TestList() {
             <p>{test.testUrl}</p>
             <p>{test.testers.length}</p>
             <p>{formatDate(test.deadline)}</p>
+            <p>
+              {hasDeadlinePassed(test.deadline) ? (
+                <span style={{ color: "#ff0000", marginLeft: "10px" }}>
+                  마감
+                </span>
+              ) : (
+                <span style={{ color: "#355e70", marginLeft: "10px" }}>
+                  진행중
+                </span>
+              )}
+            </p>
           </TestCard>
         ))
       ) : (
