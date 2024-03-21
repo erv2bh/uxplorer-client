@@ -11,7 +11,7 @@ function useGetTesterMissions(testerId, testId) {
   const { userId } = useAtomValue(userAtom);
 
   return useQuery({
-    queryKey: ["testerMissions"],
+    queryKey: ["testerMissions", testerId],
     queryFn: async () => {
       if (missionIds.length === 0) {
         return [];
