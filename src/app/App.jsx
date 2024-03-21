@@ -20,6 +20,7 @@ import Login from "../components/Login";
 import UserTest from "../components/UserTest";
 import TestExecution from "../components/UserTest/TestExecution";
 import MissionModal from "../components/Modal/MissionModal";
+import Survey from "../components/UserTest/Survey";
 
 function App() {
   const user = useAtomValue(userAtom);
@@ -50,6 +51,7 @@ function App() {
           <Route path="mission" element={<TestExecution />}>
             <Route path=":missionId" element={<MissionModal />} />
           </Route>
+          <Route path="survey" element={<Survey />} />
         </Route>
         <Route path="/login" element={<Login />} />
       </Routes>
