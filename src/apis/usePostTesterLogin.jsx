@@ -6,18 +6,18 @@ import { useSetAtom } from "jotai";
 import fetchData from "../utils/axios";
 import Loading from "../components/shared/Loading";
 
-import { errorMessageAtom } from "../atoms/atoms";
+import { errorMessageAtom, testerAtom } from "../atoms/atoms";
 
 function usePostTesterLogin() {
   const navigate = useNavigate();
   const setErrorMessage = useSetAtom(errorMessageAtom);
+  const setTester = useSetAtom(testerAtom);
 
   async function handleTesterLogin({ id, password }) {
     const testerInfo = {
       testerId: id,
       testerPassword: password,
     };
-
     const response = await fetchData("POST", "/auth/login", testerInfo);
 
     return response;
@@ -28,6 +28,7 @@ function usePostTesterLogin() {
     onSuccess: (result) => {
       const { data } = result;
 
+      setTester(data.testerObjectId);
       navigate(`/test/${data.testerObjectId}`);
     },
     onError: (error) => {

@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { useAtomValue } from "jotai";
-import { userAtom } from "../atoms/atoms";
+import { testerAtom, userAtom } from "../atoms/atoms";
 
 import Onboarding from "../components/Onboarding";
 import Dashboard from "../components/Dashboard";
@@ -24,6 +24,7 @@ import Survey from "../components/UserTest/Survey";
 
 function App() {
   const user = useAtomValue(userAtom);
+  const tester = useAtomValue(testerAtom);
 
   return (
     <>
@@ -47,12 +48,14 @@ function App() {
             </Route>
           </>
         )}
-        <Route path="/test/:testerId" element={<UserTest />}>
-          <Route path="mission" element={<TestExecution />}>
-            <Route path=":missionId" element={<MissionModal />} />
+        {tester && (
+          <Route path="/test/:testerId" element={<UserTest />}>
+            <Route path="mission" element={<TestExecution />}>
+              <Route path=":missionId" element={<MissionModal />} />
+            </Route>
+            <Route path="survey" element={<Survey />} />
           </Route>
-          <Route path="survey" element={<Survey />} />
-        </Route>
+        )}
         <Route path="/login" element={<Login />} />
       </Routes>
     </>

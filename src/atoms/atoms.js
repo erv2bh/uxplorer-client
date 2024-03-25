@@ -16,6 +16,7 @@ export const completedMissionDataAtom = atom({});
 export const testerMissionsDataAtom = atom([]);
 export const currentMission = atom([]);
 
+export const testerAtom = atomWithStorage("testerInfo", "");
 export const testerDataAtom = atom([]);
 export const completedTesterAtom = atom([]);
 
