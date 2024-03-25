@@ -87,6 +87,7 @@ function TotalSuccessResult() {
 
 const TotalSuccessRateContainer = styled.div`
   width: 290px;
+  height: 400px;
 `;
 
 export default TotalSuccessResult;
