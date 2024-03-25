@@ -37,4 +37,6 @@ export const missionAtom = atom([
 
 export const screenRecorderAtom = atomWithStorage("isScreenRecording", "");
 
-export const errorMessage = atom("");
+export const errorMessageAtom = atom("");
+
+export const surveyResultsAtom = atom([]);

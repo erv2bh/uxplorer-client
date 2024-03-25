@@ -9,7 +9,7 @@ import {
   userAtom,
   testDetailAtom,
   missionAtom,
-  errorMessage,
+  errorMessageAtom,
 } from "../atoms/atoms";
 import Loading from "../components/shared/Loading";
 
@@ -17,7 +17,7 @@ function usePostTest() {
   const testDetail = useAtomValue(testDetailAtom);
   const missions = useAtomValue(missionAtom);
   const { userId } = useAtomValue(userAtom);
-  const setErrorMessage = useSetAtom(errorMessage);
+  const setErrorMessage = useSetAtom(errorMessageAtom);
   const navigate = useNavigate();
 
   const payload = {
@@ -37,9 +37,14 @@ function usePostTest() {
       navigate("/dashboard");
     },
     onError: (error) => {
-      const message =
-        error?.response?.data?.error || "테스트 생성에 실패했습니다.";
-      setErrorMessage(message);
+      switch (error.response.status) {
+        case 400:
+          setErrorMessage("같은 테스트 이름이 존재합니다.");
+          break;
+
+        default:
+          setErrorMessage("테스트 생성에 실패했습니다.");
+      }
     },
   });
 
