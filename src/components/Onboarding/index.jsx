@@ -9,9 +9,13 @@ function Onboarding() {
 
   return (
     <Container>
-      <Logo src="/assets/uxplorer-logo.png" alt="UXplorer Logo" />
-      <Button onClick={() => fetchGoogleLogin()}>기업 로그인</Button>
-      <Button onClick={() => navigate("/login")}>테스터 로그인</Button>
+      <LogoContainer>
+        <Logo src="/assets/uxplorer-logo.png" alt="UXplorer Logo" />
+      </LogoContainer>
+      <ButtonContainer>
+        <Button onClick={() => fetchGoogleLogin()}>기업 로그인</Button>
+        <Button onClick={() => navigate("/login")}>테스터 로그인</Button>
+      </ButtonContainer>
     </Container>
   );
 }
@@ -24,9 +28,24 @@ const Container = styled.div`
   height: 100vh;
 `;
 
+const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+`;
+
 const Logo = styled.img`
   max-width: 300px;
-  margin-bottom: 50px;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 30px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Button = styled.button`
