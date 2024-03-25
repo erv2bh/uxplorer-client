@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../atoms/atoms";
 import fetchData from "../utils/axios";
-import Loading from "../components/shared/Loading";
 
 function useGetAllTests() {
   const { userId } = useAtomValue(userAtom);
@@ -21,10 +20,6 @@ function useGetAllTests() {
     refetchOnWindowFocus: true,
     refetchIntervalInBackground: true,
   });
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return { createdTests, isLoading };
 }

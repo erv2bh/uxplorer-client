@@ -7,10 +7,11 @@ import { currentTestIdAtom } from "../../atoms/atoms";
 
 import useGetAllTests from "../../apis/useGetAllTests";
 import formatDate from "../../utils/formatDate";
+import Loading from "../shared/Loading";
 
 function TestList() {
   const setCurrentTestId = useSetAtom(currentTestIdAtom);
-  const { createdTests } = useGetAllTests();
+  const { createdTests, isLoading } = useGetAllTests();
 
   function switchTest(clickedTestId) {
     setCurrentTestId(clickedTestId);
@@ -22,6 +23,8 @@ function TestList() {
 
     return deaelineData < today;
   }
+
+  if (isLoading) return <Loading />;
 
   return (
     <Container>
@@ -35,7 +38,7 @@ function TestList() {
           >
             <h3>{test.title}</h3>
             <p>{test.testUrl}</p>
-            <p>{test.testers.length}</p>
+            <p>{test.testers.length}명</p>
             <p>{formatDate(test.deadline)}</p>
             <p>
               {hasDeadlinePassed(test.deadline) ? (
