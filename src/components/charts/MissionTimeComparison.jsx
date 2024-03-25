@@ -99,6 +99,7 @@ function MissionTimeComparison() {
 
 const BarChartContainer = styled.div`
   width: 700px;
+  height: 400px;
 `;
 
 export default MissionTimeComparison;
