@@ -31,7 +31,7 @@ function Survey() {
 
     if (isAllQuestionsAnswered) {
       const surveyResults = {
-        susScore: responses,
+        susScore: responses.map((response) => response + 1),
         npsScore,
       };
 
