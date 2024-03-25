@@ -19,7 +19,7 @@ function Sidebar() {
         테스트 정보
       </SidebarItem>
       <SidebarItem
-        to={`/test/${testId}/test-result/user-results`}
+        to={`/test/${testId}/test-result/total-results`}
         activeClassName={
           isPathActive(`/test/${testId}/test-result`) ? "active" : ""
         }

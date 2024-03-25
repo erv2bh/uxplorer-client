@@ -7,11 +7,11 @@ function TestResultNavigation() {
 
   return (
     <NavigationContainer>
-      <StyledNavLink to={`/test/${testId}/test-result/user-results`}>
-        유저별 결과
-      </StyledNavLink>
       <StyledNavLink to={`/test/${testId}/test-result/total-results`}>
         통합 결과
+      </StyledNavLink>
+      <StyledNavLink to={`/test/${testId}/test-result/user-results`}>
+        유저별 결과
       </StyledNavLink>
     </NavigationContainer>
   );
