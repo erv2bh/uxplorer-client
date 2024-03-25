@@ -1,60 +1,60 @@
 import styled from "styled-components";
 
-import { useParams, useLocation, NavLink } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { testId } = useParams();
 
-  const isPathActive = (path) => location.pathname.includes(path);
+  function isHighlight(pathSegment) {
+    return location.pathname.includes(`/test/${testId}/${pathSegment}`);
+  }
+
+  function navigateTo(path) {
+    return navigate(path);
+  }
 
   return (
-    <SidebarContainer>
-      <SidebarItem
-        to={`/test/${testId}/test-info`}
-        activeClassName={
-          isPathActive(`/test/${testId}/test-info`) ? "active" : ""
-        }
+    <Nav>
+      <Text
+        $isHighlight={isHighlight("test-info")}
+        onClick={() => navigateTo(`/test/${testId}/test-info`)}
       >
         테스트 정보
-      </SidebarItem>
-      <SidebarItem
-        to={`/test/${testId}/test-result/total-results`}
-        activeClassName={
-          isPathActive(`/test/${testId}/test-result`) ? "active" : ""
-        }
+      </Text>
+      <Text
+        $isHighlight={isHighlight("test-result")}
+        onClick={() => navigateTo(`/test/${testId}/test-result/total-results`)}
       >
         테스트 결과
-      </SidebarItem>
-    </SidebarContainer>
+      </Text>
+    </Nav>
   );
 }
 
-const SidebarContainer = styled.div`
-  background-color: #f5f5f5;
-  width: 200px;
+const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  background-color: #f5f5f5;
+  min-width: 200px;
 `;
 
-const SidebarItem = styled(NavLink)`
+const Text = styled.div`
   padding: 10px 20px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  color: #333;
-  text-decoration: none;
+  margin: 15px 0;
+  color: ${({ $isHighlight }) => ($isHighlight ? "#fff" : "#333")};
+  background-color: ${({ $isHighlight }) =>
+    $isHighlight ? "#355e70" : "transparent"};
   font-size: 25px;
   text-align: center;
-
-  &.active {
-    color: #fff;
-    background-color: #355e70;
-  }
+  cursor: pointer;
 
   &:hover {
     color: #fff;
     background-color: #133341;
   }
 `;
+
 export default Sidebar;
