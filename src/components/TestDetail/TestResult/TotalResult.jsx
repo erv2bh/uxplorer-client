@@ -5,18 +5,26 @@ import styled from "styled-components";
 import TotalSuccessResult from "../../charts/TotalSuccessRate";
 import MissionTimeComparison from "../../charts/MissionTimeComparison";
 
+import useGetSurveyResult from "../../../apis/useGetSurveyResult";
+
 import {
   testerDataAtom,
   completedMissionCountAtom,
   completedTesterAtom,
 } from "../../../atoms/atoms";
+import SystemUsabilityScale from "../../charts/SystemUsabilityScale";
+import NetPromoterScore from "../../charts/NetPromoterScore";
+import Loading from "../../shared/Loading";
 
 function TotalResults() {
+  const { isLoading } = useGetSurveyResult();
   const { totalCompletedMissionsCount } = useAtomValue(
     completedMissionCountAtom,
   );
   const testerCount = useAtomValue(testerDataAtom).length;
   const completedTesterCount = useAtomValue(completedTesterAtom).length;
+
+  if (isLoading) return <Loading />;
 
   return totalCompletedMissionsCount > 0 ? (
     <>
@@ -29,6 +37,8 @@ function TotalResults() {
         <TotalSuccessResult />
         <MissionTimeComparison />
       </ChartsContainer>
+      <SystemUsabilityScale />
+      <NetPromoterScore />
     </>
   ) : (
     <TextContainer>테스트에 참여한 인원이 없습니다.</TextContainer>
