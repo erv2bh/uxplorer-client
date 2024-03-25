@@ -1,4 +1,6 @@
-import { useAtomValue } from "jotai";
+import { useNavigate } from "react-router-dom";
+
+import { useAtomValue, useSetAtom } from "jotai";
 
 import styled from "styled-components";
 
@@ -6,13 +8,29 @@ import formatDate from "../../utils/formatDate";
 import {
   currentTestDataAtom,
   missionsDataAtom,
+  testDetailAtom,
   testerDataAtom,
 } from "../../atoms/atoms";
 
 function TestInfo() {
+  const navigate = useNavigate();
+  const setTestDetail = useSetAtom(testDetailAtom);
   const testDetail = useAtomValue(currentTestDataAtom);
   const testerEmails = useAtomValue(testerDataAtom);
   const missions = useAtomValue(missionsDataAtom);
+
+  const isTestExpired = new Date(testDetail.deadline) < new Date();
+
+  function handleRecreateTest() {
+    setTestDetail({
+      testName: testDetail.title,
+      testDescription: testDetail.description,
+      testUrl: testDetail.testUrl,
+      testDeadline: "",
+    });
+
+    navigate("/new-test/test-detail");
+  }
 
   return (
     <TestInfoContainer>
@@ -51,6 +69,11 @@ function TestInfo() {
           </MissionDetail>
         ))}
       </MissionContainer>
+      {isTestExpired && (
+        <RecreateTestButton onClick={handleRecreateTest}>
+          테스트 다시 만들기
+        </RecreateTestButton>
+      )}
     </TestInfoContainer>
   );
 }
@@ -107,6 +130,19 @@ const MissionTitle = styled.h4`
 const MissionText = styled.p`
   color: #555;
   margin: 5px 0 0 0;
+`;
+
+const RecreateTestButton = styled.button`
+  padding: 10px 20px;
+  background-color: #355e70;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #133341;
+  }
 `;
 
 export default TestInfo;
