@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAtomValue, useSetAtom } from "jotai";
@@ -11,15 +12,33 @@ import {
   testDetailAtom,
   testerDataAtom,
 } from "../../atoms/atoms";
+import useDeleteTest from "../../apis/useDeleteTest";
+import Loading from "../shared/Loading";
+import DeleteConfirmModal from "../Modal/DeleteConfirmModal";
 
 function TestInfo() {
   const navigate = useNavigate();
+  const { fetchDeleteTest, isPending } = useDeleteTest();
   const setTestDetail = useSetAtom(testDetailAtom);
   const testDetail = useAtomValue(currentTestDataAtom);
   const testerEmails = useAtomValue(testerDataAtom);
   const missions = useAtomValue(missionsDataAtom);
+  const [showModal, setShowModal] = useState(false);
 
   const isTestExpired = new Date(testDetail.deadline) < new Date();
+
+  function openModal() {
+    setShowModal(true);
+  }
+
+  function closeModal() {
+    setShowModal(false);
+  }
+
+  function confirmDelete() {
+    fetchDeleteTest();
+    closeModal();
+  }
 
   function handleRecreateTest() {
     setTestDetail({
@@ -31,6 +50,8 @@ function TestInfo() {
 
     navigate("/new-test/test-detail");
   }
+
+  if (isPending) return <Loading />;
 
   return (
     <TestInfoContainer>
@@ -69,11 +90,19 @@ function TestInfo() {
           </MissionDetail>
         ))}
       </MissionContainer>
-      {isTestExpired && (
-        <RecreateTestButton onClick={handleRecreateTest}>
-          테스트 다시 만들기
-        </RecreateTestButton>
-      )}
+      <ButtonContainer>
+        {isTestExpired && (
+          <RecreateTestButton onClick={handleRecreateTest}>
+            테스트 다시 만들기
+          </RecreateTestButton>
+        )}
+        <DeleteTestButton onClick={openModal}>삭제하기</DeleteTestButton>
+      </ButtonContainer>
+      <DeleteConfirmModal
+        isOpen={showModal}
+        onCancel={closeModal}
+        onConfirm={confirmDelete}
+      />
     </TestInfoContainer>
   );
 }
@@ -132,6 +161,12 @@ const MissionText = styled.p`
   margin: 5px 0 0 0;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+`;
+
 const RecreateTestButton = styled.button`
   padding: 10px 20px;
   background-color: #355e70;
@@ -142,6 +177,20 @@ const RecreateTestButton = styled.button`
 
   &:hover {
     background-color: #133341;
+  }
+`;
+
+const DeleteTestButton = styled.button`
+  justify-content: flex-end;
+  padding: 10px 20px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #c9302c;
   }
 `;
 
