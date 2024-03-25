@@ -1,16 +1,30 @@
+import { useSetAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
+import { searchQueryAtom } from "../../atoms/atoms";
 
 function SearchNavigation() {
   const navigate = useNavigate();
+  const setSearchQuery = useSetAtom(searchQueryAtom);
+
+  function handleInputChange(event) {
+    const searchQuery = event.target.value;
+
+    setSearchQuery(searchQuery);
+  }
 
   return (
     <Nav>
-      <SearchContainer>
+      <SearchContainer onSubmit={(event) => event.preventDefault()}>
         <Icon>🔍</Icon>
-        <SearchInput type="text" placeholder="테스트 이름을 입력해주세요." />
-        <SearchButton>검색</SearchButton>
+        <SearchInput
+          name="search"
+          type="text"
+          placeholder="테스트 이름을 입력해주세요."
+          onChange={handleInputChange}
+        />
+        <SearchButton type="submit">검색</SearchButton>
       </SearchContainer>
       <NewTestButton onClick={() => navigate("/new-test/test-detail")}>
         + 새 테스트
@@ -29,7 +43,7 @@ const Nav = styled.nav`
   height: 40px;
 `;
 
-const SearchContainer = styled.div`
+const SearchContainer = styled.form`
   position: relative;
   display: inline-block;
 `;

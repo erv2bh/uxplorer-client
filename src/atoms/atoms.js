@@ -41,3 +41,5 @@ export const screenRecorderAtom = atomWithStorage("isScreenRecording", "");
 export const errorMessageAtom = atom("");
 
 export const surveyResultsAtom = atom([]);
+
+export const searchQueryAtom = atom("");

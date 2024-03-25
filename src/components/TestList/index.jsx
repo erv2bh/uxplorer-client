@@ -1,17 +1,25 @@
 import { Link } from "react-router-dom";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 
 import styled from "styled-components";
 
-import { currentTestIdAtom } from "../../atoms/atoms";
+import { currentTestIdAtom, searchQueryAtom } from "../../atoms/atoms";
 
 import useGetAllTests from "../../apis/useGetAllTests";
 import formatDate from "../../utils/formatDate";
 import Loading from "../shared/Loading";
 
 function TestList() {
+  const searchQuery = useAtomValue(searchQueryAtom);
   const setCurrentTestId = useSetAtom(currentTestIdAtom);
   const { createdTests, isLoading } = useGetAllTests();
+
+  const filteredTests = createdTests?.filter((test) =>
+    test.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  const shouldShowFilteredTest = searchQuery && filteredTests?.length > 0;
+  const testsToShow = shouldShowFilteredTest ? filteredTests : createdTests;
 
   function switchTest(clickedTestId) {
     setCurrentTestId(clickedTestId);
@@ -28,8 +36,8 @@ function TestList() {
 
   return (
     <Container>
-      {createdTests?.length > 0 ? (
-        createdTests.map((test) => (
+      {testsToShow?.length > 0 ? (
+        testsToShow.map((test) => (
           <TestCard
             key={test._id}
             as={Link}
