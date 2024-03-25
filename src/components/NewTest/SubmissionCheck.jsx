@@ -1,14 +1,19 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 
 import styled from "styled-components";
 
-import { testDetailAtom, missionAtom } from "../../atoms/atoms";
+import {
+  testDetailAtom,
+  missionAtom,
+  errorMessageAtom,
+} from "../../atoms/atoms";
 
 import usePostTest from "../../apis/usePostTest";
 
 function SubmissionCheck() {
+  const [errorMessage, setErrorMessage] = useAtom(errorMessageAtom);
   const missions = useAtomValue(missionAtom);
   const testDetail = useAtomValue(testDetailAtom);
   const saveTestWithMissions = usePostTest();
@@ -28,6 +33,7 @@ function SubmissionCheck() {
   }, [missions, navigate]);
 
   function handleMovePrevious() {
+    setErrorMessage("");
     navigate("/new-test/test-mission");
   }
 
@@ -77,6 +83,7 @@ function SubmissionCheck() {
       </FormContent>
       <ButtonsContainer>
         <PreviousButton onClick={handleMovePrevious}>이전</PreviousButton>
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <SubmitButton onClick={() => saveTestWithMissions()}>생성</SubmitButton>
       </ButtonsContainer>
     </FormContainer>
@@ -136,6 +143,10 @@ const SubmitButton = styled(Button)`
 
 const PreviousButton = styled(Button)`
   align-self: flex-start;
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
 `;
 
 export default SubmissionCheck;

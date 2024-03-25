@@ -1,38 +1,64 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { useAtom } from "jotai";
 
 import styled from "styled-components";
 
 import usePostTesterLogin from "../../apis/usePostTesterLogin";
 
+import { errorMessageAtom } from "../../atoms/atoms";
+
 function Login() {
+  const navigate = useNavigate();
   const fetchTesterLogin = usePostTesterLogin();
   const [testerId, setTesterId] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useAtom(errorMessageAtom);
 
-  const handleSubmit = (event) => {
+  function handleTesterIdChange(event) {
+    setTesterId(event.target.value);
+    setErrorMessage("");
+  }
+
+  function handleTesterPasswordChange(event) {
+    setPassword(event.target.value);
+    setErrorMessage("");
+  }
+
+  function handleNavigateBack() {
+    setErrorMessage("");
+    navigate("/");
+  }
+
+  function handleSubmit(event) {
     event.preventDefault();
 
     fetchTesterLogin({ id: testerId, password });
-  };
+  }
 
   return (
     <Container>
-      <Logo src="/assets/uxplorer-logo.png" alt="UXplorer Logo" />
-      <Form onSubmit={handleSubmit}>
+      <LogoContainer>
+        <Logo src="/assets/uxplorer-logo.png" alt="UXplorer Logo" />
+      </LogoContainer>
+      <FormContainer as="form" onSubmit={handleSubmit}>
         <Input
           type="text"
           placeholder="테스터 아이디"
           value={testerId}
-          onChange={(e) => setTesterId(e.target.value)}
+          onChange={handleTesterIdChange}
         />
         <Input
           type="password"
           placeholder="비밀번호"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleTesterPasswordChange}
         />
         <Button type="submit">로그인</Button>
-      </Form>
+        <Button onClick={handleNavigateBack}>돌아가기</Button>
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      </FormContainer>
     </Container>
   );
 }
@@ -45,14 +71,23 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const Logo = styled.img`
-  max-width: 300px;
-  margin-bottom: 1px;
+const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
 `;
 
-const Form = styled.form`
+const Logo = styled.img`
+  max-width: 300px;
+`;
+
+const FormContainer = styled.div`
+  margin-top: 30px;
+  min-height: 250px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -76,6 +111,10 @@ const Button = styled.button`
   &:hover {
     background-color: #5a5ae0;
   }
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
 `;
 
 export default Login;
