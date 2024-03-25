@@ -51,7 +51,7 @@ function TestList() {
             <p>
               {hasDeadlinePassed(test.deadline) ? (
                 <span style={{ color: "#ff0000", marginLeft: "10px" }}>
-                  마감
+                  종료됨
                 </span>
               ) : (
                 <span style={{ color: "#355e70", marginLeft: "10px" }}>
