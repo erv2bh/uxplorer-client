@@ -11,7 +11,6 @@ import {
   missionAtom,
   errorMessageAtom,
 } from "../atoms/atoms";
-import Loading from "../components/shared/Loading";
 
 function usePostTest() {
   const testDetail = useAtomValue(testDetailAtom);
@@ -31,7 +30,7 @@ function usePostTest() {
     return response;
   }
 
-  const { mutate: saveTestWithMissions, isLoading } = useMutation({
+  const { mutate: saveTestWithMissions, isPending } = useMutation({
     mutationFn: saveTest,
     onSuccess: () => {
       navigate("/dashboard");
@@ -48,11 +47,7 @@ function usePostTest() {
     },
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return saveTestWithMissions;
+  return { saveTestWithMissions, loading: isPending };
 }
 
 export default usePostTest;

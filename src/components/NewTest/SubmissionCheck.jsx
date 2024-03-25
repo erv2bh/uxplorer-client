@@ -11,12 +11,13 @@ import {
 } from "../../atoms/atoms";
 
 import usePostTest from "../../apis/usePostTest";
+import Loading from "../shared/Loading";
 
 function SubmissionCheck() {
   const [errorMessage, setErrorMessage] = useAtom(errorMessageAtom);
   const missions = useAtomValue(missionAtom);
   const testDetail = useAtomValue(testDetailAtom);
-  const saveTestWithMissions = usePostTest();
+  const { saveTestWithMissions, loading } = usePostTest();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,6 +37,8 @@ function SubmissionCheck() {
     setErrorMessage("");
     navigate("/new-test/test-mission");
   }
+
+  if (loading) return <Loading />;
 
   return (
     <FormContainer>

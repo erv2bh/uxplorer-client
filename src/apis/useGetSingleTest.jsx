@@ -15,8 +15,6 @@ import {
   completedTesterAtom,
 } from "../atoms/atoms";
 
-import Loading from "../components/shared/Loading";
-
 function useGetSingleTest() {
   const { userId } = useAtomValue(userAtom);
   const { testId } = useParams();
@@ -52,18 +50,12 @@ function useGetSingleTest() {
   }
 
   const { data, isLoading } = useQuery({
-    queryKey: ["singleTest"],
+    queryKey: ["singleTest", testId],
     queryFn: () => getSingleTest(),
-    refetchOnMount: true,
-    refetchOnWindowFocus: true,
-    refetchIntervalInBackground: true,
+    refetchOnMount: false,
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return { data };
+  return { data, isLoading };
 }
 
 export default useGetSingleTest;

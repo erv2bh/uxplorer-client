@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useLogout from "../../apis/usePostLogout";
+import Loading from "../shared/Loading";
 
 function Header() {
   const navigate = useNavigate();
-  const fetchLogout = useLogout();
+  const { fetchLogout, isPending } = useLogout();
+
+  if (isPending) return <Loading />;
 
   return (
     <StyledHeader>

@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
 import fetchData from "../utils/axios";
-import Loading from "../components/shared/Loading";
 
 function useGetTestUrl() {
   const { testerId } = useParams();
@@ -19,11 +18,7 @@ function useGetTestUrl() {
     enabled: !!testerId,
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return { testUrl };
+  return { testUrl, isLoading };
 }
 
 export default useGetTestUrl;

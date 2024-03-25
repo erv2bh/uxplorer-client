@@ -6,8 +6,6 @@ import fetchData from "../utils/axios";
 
 import { currentMission } from "../atoms/atoms";
 
-import Loading from "../components/shared/Loading";
-
 function useGetSingleMission() {
   const { testerId, missionId } = useParams();
 
@@ -29,11 +27,7 @@ function useGetSingleMission() {
     enabled: !!missionId,
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return { data };
+  return { data, isLoading };
 }
 
 export default useGetSingleMission;

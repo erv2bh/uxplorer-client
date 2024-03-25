@@ -3,9 +3,12 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 import useGetTestURL from "../../apis/useGetTestURL";
+import Loading from "../shared/Loading";
 
 function TestExecution() {
-  const { testUrl } = useGetTestURL();
+  const { testUrl, isLoading } = useGetTestURL();
+
+  if (isLoading) return <Loading />;
 
   return (
     <>

@@ -3,8 +3,6 @@ import { useMutation } from "@tanstack/react-query";
 
 import fetchData from "../utils/axios";
 
-import Loading from "../components/shared/Loading";
-
 function usePostSurveys() {
   const { testerId } = useParams();
 
@@ -18,15 +16,11 @@ function usePostSurveys() {
     return response;
   }
 
-  const { mutate: saveSurveyData, isLoading } = useMutation({
+  const { mutate: saveSurveyData, isPending } = useMutation({
     mutationFn: saveSurveys,
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return saveSurveyData;
+  return { saveSurveyData, isPending };
 }
 
 export default usePostSurveys;

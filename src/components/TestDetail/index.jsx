@@ -7,9 +7,12 @@ import TestDetailNavigation from "../Navigation/TestDetailNavigation";
 import Sidebar from "../Sidebar/Sidebar";
 
 import useGetSingleTest from "../../apis/useGetSingleTest";
+import Loading from "../shared/Loading";
 
 function TestDetail() {
-  useGetSingleTest();
+  const { isLoading } = useGetSingleTest();
+
+  if (isLoading) return <Loading />;
 
   return (
     <>

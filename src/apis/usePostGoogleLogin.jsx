@@ -7,7 +7,6 @@ import { userAtom } from "../atoms/atoms";
 import { firebaseAuth } from "../app/firebaseAuth";
 
 import fetchData from "../utils/axios";
-import Loading from "../components/shared/Loading";
 
 function usePostGoogleLogin() {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ function usePostGoogleLogin() {
     return response;
   }
 
-  const { mutate: fetchGoogleLogin, isLoading } = useMutation({
+  const { mutate: fetchGoogleLogin, isPending } = useMutation({
     mutationFn: handleGoogleLogin,
     onSuccess: (result) => {
       const { data } = result;
@@ -37,11 +36,7 @@ function usePostGoogleLogin() {
     },
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return fetchGoogleLogin;
+  return { fetchGoogleLogin, isPending };
 }
 
 export default usePostGoogleLogin;

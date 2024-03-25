@@ -2,10 +2,13 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import usePostGoogleLogin from "../../apis/usePostGoogleLogin";
+import Loading from "../shared/Loading";
 
 function Onboarding() {
   const navigate = useNavigate();
-  const fetchGoogleLogin = usePostGoogleLogin();
+  const { fetchGoogleLogin, isPending } = usePostGoogleLogin();
+
+  if (isPending) return <Loading />;
 
   return (
     <Container>

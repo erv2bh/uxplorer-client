@@ -5,6 +5,7 @@ import styled from "styled-components";
 import usePostSurveys from "../../apis/usePostSurveys";
 
 import CONSTANT from "../../constants/constant";
+import Loading from "../shared/Loading";
 
 function Survey() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Survey() {
   );
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [npsScore, setNpsScore] = useState(null);
-  const saveSurveyData = usePostSurveys();
+  const { saveSurveyData, isPending } = usePostSurveys();
 
   const handleOptionChange = (questionIndex, option) => {
     const optionIndex = CONSTANT.surveyOptions.indexOf(option);
@@ -40,6 +41,8 @@ function Survey() {
       navigate("/");
     }
   };
+
+  if (isPending) return <Loading />;
 
   return (
     <SurveyContainer>
