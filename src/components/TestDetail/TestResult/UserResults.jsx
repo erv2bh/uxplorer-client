@@ -60,7 +60,9 @@ function UserResults() {
                 <MissionText>
                   완료 시간: {new Date(mission.completedAt).toLocaleString()}
                 </MissionText>
-                <MissionText>피드백: {mission.feedback}</MissionText>
+                <MissionText>
+                  피드백: {mission.feedback ? mission.feedback : "없음"}
+                </MissionText>
               </>
             )}
           </MissionDetail>
