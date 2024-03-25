@@ -79,6 +79,8 @@ function MissionModal() {
       feedback,
     };
 
+    setFeedback("");
+
     updateMissionData(missionCompletionData, {
       onSuccess: () => {
         navigateToNextMission();
@@ -94,6 +96,8 @@ function MissionModal() {
       completedAt: now,
       feedback,
     };
+
+    setFeedback("");
 
     updateMissionData(skippedMissionData, {
       onSuccess: () => {
