@@ -7,11 +7,17 @@ export const currentTestIdAtom = atom("");
 export const currentTestTitleAtom = atom("");
 export const currentTestDataAtom = atom("");
 export const missionsDataAtom = atom([]);
+export const completedMissionCountAtom = atom({
+  completedMissionsCount: "",
+  totalMissionsCount: "",
+});
+export const completedMissionDataAtom = atom({});
 
 export const testerMissionsDataAtom = atom([]);
 export const currentMission = atom([]);
 
 export const testerDataAtom = atom([]);
+export const completedTesterAtom = atom([]);
 
 export const testDetailAtom = atom({
   testName: "",
@@ -30,3 +36,5 @@ export const missionAtom = atom([
 ]);
 
 export const screenRecorderAtom = atomWithStorage("isScreenRecording", "");
+
+export const errorMessage = atom("");
