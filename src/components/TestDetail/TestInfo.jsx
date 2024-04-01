@@ -109,88 +109,93 @@ function TestInfo() {
 
 const TestInfoContainer = styled.div`
   background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 24px auto;
   max-width: 700px;
   width: 100%;
 `;
 
 const TestDetail = styled.div`
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 `;
 
 const DetailTitle = styled.h3`
-  color: #333;
-  margin: 0 0 5px 0;
+  color: #334e68;
+  margin: 0 0 10px 0;
+  font-weight: 600;
 `;
 
 const DetailText = styled.span`
   display: block;
-  color: #555;
+  color: #556789;
+  font-size: 16px;
 `;
 
 const DetailLink = styled.a`
   color: #007bff;
   text-decoration: none;
-
   &:hover {
     text-decoration: underline;
   }
 `;
 
 const MissionContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 24px;
 `;
 
 const MissionDetail = styled.div`
-  margin-bottom: 10px;
-  padding: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
   background-color: #eef2f5;
-  border-radius: 5px;
+  border-radius: 8px;
 `;
 
 const MissionTitle = styled.h4`
-  color: #355e70;
-  margin: 0;
+  color: #2b5876;
+  margin: 0 0 5px 0;
+  font-weight: 500;
 `;
 
 const MissionText = styled.p`
-  color: #555;
+  color: #556789;
   margin: 5px 0 0 0;
+  font-size: 14px;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 30px;
 `;
 
-const RecreateTestButton = styled.button`
-  padding: 10px 20px;
-  background-color: #355e70;
-  color: white;
+const Button = styled.button`
+  padding: 12px 24px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #133341;
+    opacity: 0.9;
   }
 `;
 
-const DeleteTestButton = styled.button`
-  justify-content: flex-end;
-  padding: 10px 20px;
-  background-color: #d9534f;
+const RecreateTestButton = styled(Button)`
+  background-color: #4caf50;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
   &:hover {
-    background-color: #c9302c;
+    background-color: #43a047;
+  }
+`;
+
+const DeleteTestButton = styled(Button)`
+  background-color: #f44336;
+  color: white;
+  &:hover {
+    background-color: #d32f2f;
   }
 `;
 

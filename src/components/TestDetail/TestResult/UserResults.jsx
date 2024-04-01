@@ -35,12 +35,14 @@ function UserResults() {
             </option>
           ))}
         </Select>
+        {selectedTesterVideo && (
+          <VideoButton
+            onClick={() => window.open(selectedTesterVideo, "_blank")}
+          >
+            녹화영상 보기
+          </VideoButton>
+        )}
       </SelectContainer>
-      {selectedTesterVideo && (
-        <VideoButton onClick={() => window.open(selectedTesterVideo, "_blank")}>
-          녹화영상 보기
-        </VideoButton>
-      )}
       {!isLoading &&
         filteredMissionDetails &&
         filteredMissionDetails.map((mission, index) => (
@@ -72,56 +74,69 @@ function UserResults() {
 }
 
 const UserResultsContainer = styled.div`
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   margin: 20px auto;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
   max-width: 700px;
   width: 100%;
 `;
 
 const SelectContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 `;
 
 const Select = styled.select`
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 10px 16px;
+  border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 16px;
   cursor: pointer;
+  width: 48%;
+  box-sizing: border-box;
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+  }
 `;
 
 const VideoButton = styled.button`
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: #4caf50;
+  padding: 10px 20px;
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s;
   &:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
   }
 `;
 
 const MissionDetail = styled.div`
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #eef2f5;
-  border-radius: 5px;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f2f4f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 `;
 
 const MissionTitle = styled.h4`
-  color: #355e70;
-  margin: 0;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 600;
 `;
 
 const MissionText = styled.p`
   color: #555;
-  margin: 5px 0 0 0;
+  margin-top: 4px;
+  line-height: 1.6;
 `;
 
 export default UserResults;

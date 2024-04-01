@@ -59,11 +59,11 @@ function SubmissionCheck() {
         </FormGroup>
         <FormGroup>
           <Label>테스터 이메일:</Label>
-          <ul>
-            {testDetail.testerEmails.map((email) => (
-              <li key={email}>{email}</li>
+          <StyledList>
+            {testDetail.testerEmails.map((email, index) => (
+              <ListItem key={email}>{`${index + 1}. ${email}`}</ListItem>
             ))}
-          </ul>
+          </StyledList>
         </FormGroup>
         <FormGroup>
           <Label>테스트 마감일:</Label>
@@ -117,6 +117,17 @@ const Label = styled.label`
   margin-bottom: 8px;
   font-size: 16px;
   color: #355e70;
+  font-weight: 600;
+`;
+
+const StyledList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const ListItem = styled.li`
+  margin-bottom: 8px;
 `;
 
 const ButtonsContainer = styled.div`

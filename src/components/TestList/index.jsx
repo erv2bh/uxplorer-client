@@ -69,10 +69,11 @@ function TestList() {
 }
 
 const Container = styled.div`
-  padding: 4em 15em;
+  padding: 4em 10em;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4em;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2em;
+  justify-content: center;
 `;
 
 const TestCard = styled(Link)`
@@ -83,6 +84,17 @@ const TestCard = styled(Link)`
   text-align: center;
   color: inherit;
   text-decoration: none;
+  width: 200px;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h3,
+  p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   &:hover {
     text-decoration: underline;
