@@ -1,5 +1,5 @@
 [[redirects]]
   from = "/proxy/*"
-  to = "http://uxplorer-production.ap-northeast-2.elasticbeanstalk.com/:splat"
+  to = "https://uxplorer-production.ap-northeast-2.elasticbeanstalk.com/:splat"
   status = 200
   force = true
