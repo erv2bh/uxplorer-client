@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import { useMediaQuery } from "react-responsive";
+
 import styled from "styled-components";
 import usePostGoogleLogin from "../../apis/usePostGoogleLogin";
 import Loading from "../shared/Loading";
@@ -7,6 +9,11 @@ import Loading from "../shared/Loading";
 function Onboarding() {
   const navigate = useNavigate();
   const { fetchGoogleLogin, isPending } = usePostGoogleLogin();
+  const isMobile = useMediaQuery({ query: "(max-width:1023px)" });
+
+  if (isMobile) {
+    return <div>본 어플리케이션은 PC 환경에 최적화 되어 있습니다.</div>;
+  }
 
   if (isPending) return <Loading />;
 
