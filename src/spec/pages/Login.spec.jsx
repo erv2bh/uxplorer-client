@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Login from "../../components/Login";
 
 vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom"); // 실제 모듈을 가져옵니다.
+  const actual = await vi.importActual("react-router-dom");
 
   return {
     ...actual,
