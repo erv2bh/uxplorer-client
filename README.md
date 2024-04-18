@@ -63,7 +63,7 @@
 
 ### **테스터**
 <p align="center">
-  <img width="700px" src="https://github.com/erv2bh/uxplorer-client/assets/101324787/d429c804-c515-441b-8b14-77cf8d4f3c37" />
+  <img width="700px" src="https://github.com/erv2bh/uxplorer-client/assets/101324787/6174be14-5031-4a69-bcfd-26deaa63bea4" />
 </p>
 
 - 테스터는 테스트 환경에서 UX 테스트를 진행 할 수 있습니다.
