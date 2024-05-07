@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-import { useMediaQuery } from "react-responsive";
-
 import styled from "styled-components";
 import usePostGoogleLogin from "../../apis/usePostGoogleLogin";
 import Loading from "../shared/Loading";
@@ -9,10 +7,22 @@ import Loading from "../shared/Loading";
 function Onboarding() {
   const navigate = useNavigate();
   const { fetchGoogleLogin, isPending } = usePostGoogleLogin();
-  const isMobile = useMediaQuery({ query: "(max-width:1023px)" });
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   if (isMobile) {
-    return <div>본 어플리케이션은 PC 환경에 최적화 되어 있습니다.</div>;
+    return (
+      <>
+        <div>
+          <p>본 어플리케이션은 PC 환경에 최적화 되어 있습니다.</p>
+          <p>모바일 환경에서는 원활한 사용이 어려우니 PC로 접속 바랍니다.</p>
+        </div>
+        <div>
+          <a href="https://github.com/erv2bh/uxplorer-client">
+            리드미 읽으러 가기
+          </a>
+        </div>
+      </>
+    );
   }
 
   if (isPending) return <Loading />;
