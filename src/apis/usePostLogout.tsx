@@ -6,20 +6,23 @@ import fetchData from "../utils/axios";
 
 import { userAtom } from "../atoms/atoms";
 
-function useLogout() {
+function useLogout(): {
+  fetchLogout: () => void;
+  isPending: boolean;
+} {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const setUser = useSetAtom(userAtom);
 
-  async function handleGoogleLogout() {
+  async function handleGoogleLogout(): Promise<void> {
     await fetchData("POST", "/auth/logout");
   }
 
-  const { mutate: fetchLogout, isPending } = useMutation({
+  const { mutate: fetchLogout, isPending } = useMutation<void, Error>({
     mutationFn: handleGoogleLogout,
     onSuccess: () => {
-      setUser("");
+      setUser({});
       queryClient.clear();
       navigate("/");
     },

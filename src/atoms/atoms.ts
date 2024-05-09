@@ -1,7 +1,26 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-export const userAtom = atomWithStorage("userInfo", "");
+interface UserInfo {
+  username?: string;
+  userId?: string;
+}
+
+interface TestDetail {
+  testName: string;
+  testDescription: string;
+  testUrl: string;
+  testerEmails: string[];
+  testDeadline: string;
+}
+
+interface Mission {
+  id: string;
+  description: string;
+  expectedDuration: string;
+}
+
+export const userAtom = atomWithStorage<UserInfo>("userInfo", {});
 
 export const currentTestIdAtom = atom("");
 export const currentTestTitleAtom = atom("");
@@ -20,7 +39,7 @@ export const testerAtom = atomWithStorage("testerInfo", "");
 export const testerDataAtom = atom([]);
 export const completedTesterAtom = atom([]);
 
-export const testDetailAtom = atom({
+export const testDetailAtom = atom<TestDetail>({
   testName: "",
   testDescription: "",
   testUrl: "",
@@ -28,7 +47,7 @@ export const testDetailAtom = atom({
   testDeadline: "",
 });
 
-export const missionAtom = atom([
+export const missionAtom = atom<Mission[]>([
   {
     id: crypto.randomUUID(),
     description: "",
