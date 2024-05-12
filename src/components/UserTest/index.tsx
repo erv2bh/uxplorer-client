@@ -18,7 +18,7 @@ function UserTest() {
   const { testerId } = useParams();
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 
-  const isSurveyPage = location.pathname === `/test/${testerId}/survey`;
+  const isSurveyPage = location.pathname === `/tester/${testerId}/survey`;
 
   useEffect(() => {
     const isTestStarted = localStorage.getItem("isTestStarted");
@@ -31,7 +31,7 @@ function UserTest() {
   async function handleStartTest() {
     setShowWelcomeModal(false);
     localStorage.setItem("isTestStarted", "true");
-    navigate(`/test/${testerId}/mission/${data[0]}`);
+    navigate(`/tester/${testerId}/mission/${data[0]}`);
 
     try {
       const recorderInstance = await startScreenRecording(testerId);

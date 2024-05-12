@@ -61,11 +61,11 @@ function MissionModal() {
       const nextMissionId = missionIds[nextMissionIndex];
       setMissionTime(0);
 
-      navigate(`/test/${testerId}/mission/${nextMissionId}`);
+      navigate(`/tester/${testerId}/mission/${nextMissionId}`);
     } else {
       screenRecorder.stop();
 
-      navigate(`/test/${testerId}/survey`);
+      navigate(`/tester/${testerId}/survey`);
     }
   }
 

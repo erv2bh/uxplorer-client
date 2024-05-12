@@ -49,7 +49,7 @@ function App() {
           </>
         )}
         {tester && (
-          <Route path="/test/:testerId" element={<UserTest />}>
+          <Route path="/tester/:testerId" element={<UserTest />}>
             <Route path="mission" element={<TestExecution />}>
               <Route path=":missionId" element={<MissionModal />} />
             </Route>

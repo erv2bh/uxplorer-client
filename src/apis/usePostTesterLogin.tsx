@@ -29,7 +29,7 @@ function usePostTesterLogin() {
       const { data } = result;
 
       setTester(data.testerObjectId);
-      navigate(`/test/${data.testerObjectId}`);
+      navigate(`/tester/${data.testerObjectId}`);
     },
     onError: (error) => {
       switch (error.response.status) {
