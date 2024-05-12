@@ -33,6 +33,7 @@ module.exports = {
     semi: "warn",
     "no-unused-vars": "warn",
     "import/no-extraneous-dependencies": "off",
+    "import/extensions": "off",
     "react/button-has-type": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-no-bind": "off",
@@ -42,6 +43,7 @@ module.exports = {
     "react/jsx-filename-extension": ["warn", { extensions: [".js", ".jsx"] }],
     "no-param-reassign": 0,
     "no-underscore-dangle": "off",
+    "import/no-unresolved": "off",
   },
   settings: {
     react: {
