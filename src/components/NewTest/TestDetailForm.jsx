@@ -8,28 +8,33 @@ import { testDetailAtom } from "../../atoms/atoms";
 function TestDetailForm() {
   const [testDetail, setTestDetail] = useAtom(testDetailAtom);
   const [participantCount, setParticipantCount] = useState(1);
-  const [emails, setEmails] = useState([""]);
+  const [emails, setEmails] = useState([{ id: 1, value: "" }]);
   const [testInputValues, setTestInputValues] = useState({
     testName: "",
     testDescription: "",
-    testUrl: "",
+    testUrl: "https://",
     testDeadline: "",
   });
   const navigate = useNavigate();
 
   useEffect(() => {
     if (testDetail.testerEmails && testDetail.testerEmails.length > 0) {
-      setEmails(testDetail.testerEmails);
+      setEmails(
+        testDetail.testerEmails.map((email, index) => ({
+          id: index + 1,
+          value: email,
+        })),
+      );
       setParticipantCount(testDetail.testerEmails.length);
     } else {
-      setEmails([""]);
+      setEmails([{ id: 1, value: "" }]);
       setParticipantCount(1);
     }
 
     setTestInputValues({
       testName: testDetail.testName,
       testDescription: testDetail.testDescription,
-      testUrl: testDetail.testUrl,
+      testUrl: testDetail.testUrl || "https://",
       testDeadline: testDetail.testDeadline,
     });
   }, [testDetail]);
@@ -39,7 +44,7 @@ function TestDetailForm() {
       testInputValues.testName.trim() !== "" &&
       testInputValues.testDescription.trim() !== "" &&
       testInputValues.testUrl.trim() !== "" &&
-      emails.every((email) => email.trim() !== "") &&
+      emails.every((email) => email.value.trim() !== "") &&
       testInputValues.testDeadline.trim() !== ""
     );
   }
@@ -51,7 +56,7 @@ function TestDetailForm() {
     const newEmails = emails.slice(0, newCount);
 
     while (newEmails.length < newCount) {
-      newEmails.push("");
+      newEmails.push({ id: newEmails.length + 1, value: "" });
     }
 
     setEmails(newEmails);
@@ -59,7 +64,7 @@ function TestDetailForm() {
 
   function handleEmailChange(index, value) {
     const newEmails = [...emails];
-    newEmails[index] = value;
+    newEmails[index].value = value;
 
     setEmails(newEmails);
   }
@@ -67,14 +72,21 @@ function TestDetailForm() {
   function handleInputChange(event) {
     const { name, value } = event.target;
 
-    setTestInputValues((prev) => ({ ...prev, [name]: value }));
+    if (name === "testUrl") {
+      setTestInputValues((prev) => ({
+        ...prev,
+        [name]: value.startsWith("https://") ? value : `https://${  value}`,
+      }));
+    } else {
+      setTestInputValues((prev) => ({ ...prev, [name]: value }));
+    }
   }
 
   function handleCancel() {
     setTestDetail({
       testName: "",
       testDescription: "",
-      testUrl: "",
+      testUrl: "https://",
       testerEmails: [],
       testDeadline: "",
     });
@@ -82,12 +94,14 @@ function TestDetailForm() {
     navigate("/dashboard");
   }
 
-  function handleSubmit() {
+  function handleSubmit(event) {
+    event.preventDefault();
+
     setTestDetail({
       testName: testInputValues.testName,
       testDescription: testInputValues.testDescription,
       testUrl: testInputValues.testUrl,
-      testerEmails: emails,
+      testerEmails: emails.map((email) => email.value),
       testDeadline: testInputValues.testDeadline,
     });
 
@@ -131,7 +145,7 @@ function TestDetailForm() {
             name="testUrl"
             type="text"
             placeholder="테스트 URL을 입력해주세요."
-            value={testInputValues.testUrl || testDetail.testUrl || ""}
+            value={testInputValues.testUrl || testDetail.testUrl || "https://"}
             onChange={handleInputChange}
           />
         </FormGroup>
@@ -150,13 +164,13 @@ function TestDetailForm() {
         </FormGroup>
 
         {emails.map((email, index) => (
-          <FormGroup key={email}>
-            <Label htmlFor={`email-${index}`}>이메일 주소 {index + 1}</Label>
+          <FormGroup key={email.id}>
+            <Label htmlFor={`email-${email.id}`}>이메일 주소 {index + 1}</Label>
             <Input
-              id={`email-${index}`}
+              id={`email-${email.id}`}
               type="email"
               placeholder="이메일을 입력해주세요."
-              value={email}
+              value={email.value}
               onChange={(e) => handleEmailChange(index, e.target.value)}
             />
           </FormGroup>
@@ -175,15 +189,13 @@ function TestDetailForm() {
         </FormGroup>
       </FormContent>
       <ButtonsContainer>
-        <CancelButton onClick={handleCancel}>취소</CancelButton>
+        <CancelButton type="button" onClick={handleCancel}>
+          취소
+        </CancelButton>
         {!isFormValid() && (
           <AlertMessage>테스트 정보를 모두 입력해주세요.</AlertMessage>
         )}
-        <SubmitButton
-          type="submit"
-          disabled={!isFormValid()}
-          onClick={handleSubmit}
-        >
+        <SubmitButton type="submit" disabled={!isFormValid()}>
           다음
         </SubmitButton>
       </ButtonsContainer>
