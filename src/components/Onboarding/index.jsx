@@ -11,17 +11,16 @@ function Onboarding() {
 
   if (isMobile) {
     return (
-      <>
-        <div>
+      <MobileContainer>
+        <Logo src="/assets/uxplorer-logo.png" alt="UXplorer Logo" />
+        <MobileMessage>
           <p>본 어플리케이션은 PC 환경에 최적화 되어 있습니다.</p>
           <p>모바일 환경에서는 원활한 사용이 어려우니 PC로 접속 바랍니다.</p>
-        </div>
-        <div>
-          <a href="https://github.com/erv2bh/uxplorer-client">
-            리드미 읽으러 가기
-          </a>
-        </div>
-      </>
+        </MobileMessage>
+        <ReadmeLink href="https://github.com/erv2bh/uxplorer-client">
+          리드미 읽으러 가기
+        </ReadmeLink>
+      </MobileContainer>
     );
   }
 
@@ -79,6 +78,43 @@ const Button = styled.button`
   cursor: pointer;
   &:hover {
     background-color: #5a5ae0;
+  }
+`;
+
+const MobileContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+`;
+
+const MobileMessage = styled.div`
+  font-size: 18px;
+  margin-bottom: 20px;
+
+  p {
+    margin: 10px 0;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 16px;
+  }
+`;
+
+const ReadmeLink = styled.a`
+  color: #6f6fff;
+  text-decoration: none;
+  font-size: 18px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 16px;
   }
 `;
 
