@@ -443,7 +443,7 @@ Redux, Justand 등 스토어 기반의 상태관리 라이브러리를 최초 �
 <br>
 
 **1 주차: 아이디어 선정, POC, 목업 및 DB스키마 설계**
-
+- [노션 페이지 바로가기](https://yangwoocho.notion.site/UXPlorer-70fd0786b2784e59b0faf0051c6604cb?pvs=4)
 <br>
 
 **2 - 3주차: 클라이언트 구현 및 서버 구현**
