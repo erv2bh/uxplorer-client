@@ -259,8 +259,8 @@ Redux, Justand 등 스토어 기반의 상태관리 라이브러리를 최초 �
 
   미션 인덱스 관리 예시 코드
   ```js
-    const missionIds = useAtomValue(testerMissionsDataAtom);
-    const currentMissionIndex = missionIds.findIndex((id) => id === missionId);
+  const missionIds = useAtomValue(testerMissionsDataAtom);
+  const currentMissionIndex = missionIds.findIndex((id) => id === missionId);
   ```
 
 **2. 자동 라우팅 로직:** navigateToNextMission 함수는 현재 미션 인덱스를 기반으로 다음 미션의 인덱스를 계산합니다. 만약 다음 미션 인덱스가 배열 길이 내에 있다면, 해당 미션 ID로 라우팅을 업데이트합니다. 모든 미션을 완료했을 경우, 테스터를 설문 조사 페이지로 리디렉션합니다.
