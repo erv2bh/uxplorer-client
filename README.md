@@ -65,7 +65,7 @@ UXPlorer는 디자이너와 개발자, 그리고 사용자 사이의 소통의 �
 
 <br>
 
-## **테스터**
+## **테스트 진행 기능**
 <p align="center">
   <img width="700px" src="https://github.com/erv2bh/uxplorer-client/assets/101324787/6174be14-5031-4a69-bcfd-26deaa63bea4" />
 </p>
