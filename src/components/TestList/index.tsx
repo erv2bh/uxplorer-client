@@ -9,23 +9,31 @@ import useGetAllTests from "../../apis/useGetAllTests";
 import formatDate from "../../utils/formatDate";
 import Loading from "../shared/Loading";
 
+interface Test {
+  _id: string;
+  title: string;
+  testUrl: string;
+  testers: { email: string }[];
+  deadline: string;
+}
+
 function TestList() {
   const searchQuery = useAtomValue(searchQueryAtom);
   const setCurrentTestId = useSetAtom(currentTestIdAtom);
   const { createdTests, isLoading } = useGetAllTests();
 
-  const filteredTests = createdTests?.filter((test) =>
+  const filteredTests = createdTests?.filter((test: Test) =>
     test.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const shouldShowFilteredTest = searchQuery && filteredTests?.length > 0;
+  const shouldShowFilteredTest = searchQuery && filteredTests && filteredTests?.length > 0;
   const testsToShow = shouldShowFilteredTest ? filteredTests : createdTests;
 
-  function switchTest(clickedTestId) {
+  function switchTest(clickedTestId: string) {
     setCurrentTestId(clickedTestId);
   }
 
-  function hasDeadlinePassed(deadline) {
+  function hasDeadlinePassed(deadline: string) {
     const today = new Date();
     const deaelineData = new Date(deadline);
 
@@ -36,7 +44,7 @@ function TestList() {
 
   return (
     <Container>
-      {testsToShow?.length > 0 ? (
+      {testsToShow && testsToShow?.length > 0 ? (
         testsToShow.map((test) => (
           <TestCard
             key={test._id}
