@@ -1,16 +1,20 @@
 /* eslint-disable consistent-return */
 import fetchData from "./axios";
 
-async function startScreenRecording(fileName) {
+interface CustomDisplayMediaStreamOptions extends DisplayMediaStreamOptions {
+  preferCurrentTab?: boolean;
+}
+
+async function startScreenRecording(fileName: string): Promise<MediaRecorder | void> {
   const testerId = fileName;
   try {
     const stream = await navigator.mediaDevices.getDisplayMedia({
       video: true,
       preferCurrentTab: true,
-    });
+    } as CustomDisplayMediaStreamOptions);
 
     const recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
-    const chunks = [];
+    const chunks: BlobPart[] = [];
 
     recorder.ondataavailable = (e) => chunks.push(e.data);
 
