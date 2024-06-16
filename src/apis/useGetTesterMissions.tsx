@@ -5,8 +5,12 @@ import fetchData from "../utils/axios";
 
 import { missionsDataAtom, userAtom } from "../atoms/atoms";
 
-function useGetTesterMissions(testerId, testId) {
-  const missions = useAtomValue(missionsDataAtom);
+interface Mission {
+  _id: string;
+}
+
+function useGetTesterMissions(testerId: string, testId: string) {
+  const missions: Mission[] = useAtomValue(missionsDataAtom);
   const missionIds = missions.map((mission) => mission._id);
   const { userId } = useAtomValue(userAtom);
 

@@ -6,7 +6,7 @@ import fetchData from "../utils/axios";
 function usePostSurveys() {
   const { testerId } = useParams();
 
-  async function saveSurveys(surveyResults) {
+  async function saveSurveys(surveyResults: object) {
     const response = await fetchData(
       "POST",
       `/testers/${testerId}/surveys`,

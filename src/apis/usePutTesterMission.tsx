@@ -8,7 +8,7 @@ import Loading from "../components/shared/Loading";
 function usePutTesterMission() {
   const { testerId, missionId } = useParams();
 
-  async function updateMission(missionData) {
+  async function updateMission(missionData: object) {
     const response = await fetchData(
       "PUT",
       `/testers/${testerId}/missions/${missionId}`,
@@ -18,11 +18,11 @@ function usePutTesterMission() {
     return response;
   }
 
-  const { mutate: updateMissionData, isLoading } = useMutation({
+  const { mutate: updateMissionData, isPending } = useMutation({
     mutationFn: updateMission,
   });
 
-  if (isLoading) {
+  if (isPending) {
     return <Loading />;
   }
 
