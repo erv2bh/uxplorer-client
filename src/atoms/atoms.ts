@@ -20,11 +20,31 @@ interface Mission {
   expectedDuration: string;
 }
 
+interface CurrentTestData {
+  _id: string;
+  title: string;
+  description: string;
+  testUrl: string;
+  deadline: string;
+  missions: string[];
+  testers: string[];
+  owner: string;
+}
+
 export const userAtom = atomWithStorage<UserInfo>("userInfo", {});
 
 export const currentTestIdAtom = atom("");
 export const currentTestTitleAtom = atom("");
-export const currentTestDataAtom = atom({});
+export const currentTestDataAtom = atom<CurrentTestData>({
+  _id: "",
+  title: "",
+  description: "",
+  testUrl: "",
+  deadline: "",
+  missions: [],
+  testers: [],
+  owner: "",
+});
 export const missionsDataAtom = atom([]);
 export const completedMissionCountAtom = atom({
   completedMissionsCount: "",
