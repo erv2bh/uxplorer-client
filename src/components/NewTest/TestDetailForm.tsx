@@ -1,15 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAtom } from "jotai";
 import styled from "styled-components";
 import { testDetailAtom } from "../../atoms/atoms";
 
+interface Email {
+  id: number;
+  value: string;
+}
+
+interface TestInputValues {
+  testName: string;
+  testDescription: string;
+  testUrl: string;
+  testDeadline: string;
+}
+
 function TestDetailForm() {
   const [testDetail, setTestDetail] = useAtom(testDetailAtom);
-  const [participantCount, setParticipantCount] = useState(1);
-  const [emails, setEmails] = useState([{ id: 1, value: "" }]);
-  const [testInputValues, setTestInputValues] = useState({
+  const [participantCount, setParticipantCount] = useState<number>(1);
+  const [emails, setEmails] = useState<Email[]>([{ id: 1, value: "" }]);
+  const [testInputValues, setTestInputValues] = useState<TestInputValues>({
     testName: "",
     testDescription: "",
     testUrl: "https://",
@@ -39,7 +51,7 @@ function TestDetailForm() {
     });
   }, [testDetail]);
 
-  function isFormValid() {
+  function isFormValid(): boolean {
     return (
       testInputValues.testName.trim() !== "" &&
       testInputValues.testDescription.trim() !== "" &&
@@ -49,7 +61,7 @@ function TestDetailForm() {
     );
   }
 
-  function handleParticipantChange(countChange) {
+  function handleParticipantChange(countChange: number) {
     const newCount = Math.max(1, participantCount + countChange);
     setParticipantCount(newCount);
 
@@ -62,14 +74,14 @@ function TestDetailForm() {
     setEmails(newEmails);
   }
 
-  function handleEmailChange(index, value) {
+  function handleEmailChange(index: number, value: string) {
     const newEmails = [...emails];
     newEmails[index].value = value;
 
     setEmails(newEmails);
   }
 
-  function handleInputChange(event) {
+  function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target;
 
     if (name === "testUrl") {
@@ -94,7 +106,7 @@ function TestDetailForm() {
     navigate("/dashboard");
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     setTestDetail({

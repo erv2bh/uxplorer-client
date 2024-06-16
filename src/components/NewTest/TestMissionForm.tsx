@@ -7,9 +7,23 @@ import styled from "styled-components";
 
 import { testDetailAtom, missionAtom } from "../../atoms/atoms";
 
+interface Mission {
+  id: string;
+  description: string;
+  expectedDuration: string;
+}
+
+interface TestDetail {
+  testName: string;
+  testDescription: string;
+  testUrl: string;
+  testerEmails: string[];
+  testDeadline: string;
+}
+
 function TestMissionForm() {
   const [missions, setMissions] = useAtom(missionAtom);
-  const testDetail = useAtomValue(testDetailAtom);
+  const testDetail = useAtomValue<TestDetail>(testDetailAtom);
   const navigate = useNavigate();
 
   function addMission() {
@@ -19,7 +33,7 @@ function TestMissionForm() {
     ]);
   }
 
-  function removeMission(index) {
+  function removeMission(index: number) {
     if (missions.length > 3) {
       const updatedMissions = missions.filter((_, i) => i !== index);
 
@@ -27,7 +41,7 @@ function TestMissionForm() {
     }
   }
 
-  function handleMissionChange(index, type, value) {
+  function handleMissionChange(index: number, type: keyof Mission, value: string) {
     const updatedMissions = missions.map((mission, i) => {
       if (i === index) {
         return { ...mission, [type]: value };
@@ -39,7 +53,7 @@ function TestMissionForm() {
     setMissions(updatedMissions);
   }
 
-  function isTestDetailsFilled(testDetails) {
+  function isTestDetailsFilled(testDetails: TestDetail) {
     return (
       testDetails.testName.trim() !== "" &&
       testDetails.testDescription.trim() !== "" &&

@@ -40,6 +40,15 @@ function SubmissionCheck() {
 
   if (loading) return <Loading />;
 
+  const testPayload = {
+    testName: testDetail.testName,
+    testDescription: testDetail.testDescription,
+    testUrl: testDetail.testUrl,
+    testerEmails: testDetail.testerEmails,
+    testDeadline: testDetail.testDeadline,
+    missions: missions,
+  };
+
   return (
     <FormContainer>
       <FormContent>
@@ -87,7 +96,7 @@ function SubmissionCheck() {
       <ButtonsContainer>
         <PreviousButton onClick={handleMovePrevious}>이전</PreviousButton>
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-        <SubmitButton onClick={() => saveTestWithMissions()}>생성</SubmitButton>
+        <SubmitButton onClick={() => saveTestWithMissions(testPayload)}>생성</SubmitButton>
       </ButtonsContainer>
     </FormContainer>
   );
