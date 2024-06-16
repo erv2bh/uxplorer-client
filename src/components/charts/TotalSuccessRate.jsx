@@ -10,7 +10,7 @@ import { completedMissionCountAtom } from "../../atoms/atoms";
 Chart.register(ArcElement, Tooltip, Legend, Title);
 
 function TotalSuccessResult() {
-  const { completedMissionsCount, totalCompletedMissionsCount } = useAtomValue(
+  const { completedMissionsCount, totalMissionsCount } = useAtomValue(
     completedMissionCountAtom,
   );
 
@@ -39,7 +39,7 @@ function TotalSuccessResult() {
         label: "미션 성공률",
         data: [
           completedMissionsCount,
-          totalCompletedMissionsCount - completedMissionsCount,
+          totalMissionsCount - completedMissionsCount,
         ],
         backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)"],
         borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"],
