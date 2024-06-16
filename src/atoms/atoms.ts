@@ -24,7 +24,7 @@ export const userAtom = atomWithStorage<UserInfo>("userInfo", {});
 
 export const currentTestIdAtom = atom("");
 export const currentTestTitleAtom = atom("");
-export const currentTestDataAtom = atom("");
+export const currentTestDataAtom = atom({});
 export const missionsDataAtom = atom([]);
 export const completedMissionCountAtom = atom({
   completedMissionsCount: "",
