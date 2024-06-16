@@ -1,19 +1,30 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 import { useSetAtom } from "jotai";
-
+import { AxiosResponse } from "axios";
 import fetchData from "../utils/axios";
 import Loading from "../components/shared/Loading";
 
 import { errorMessageAtom, testerAtom } from "../atoms/atoms";
+
+interface LoginForm {
+  id: string;
+  password: string;
+}
+
+interface LoginResponse {
+  data: {
+    testerObjectId: string;
+  };
+}
 
 function usePostTesterLogin() {
   const navigate = useNavigate();
   const setErrorMessage = useSetAtom(errorMessageAtom);
   const setTester = useSetAtom(testerAtom);
 
-  async function handleTesterLogin({ id, password }) {
+  async function handleTesterLogin({ id, password }: LoginForm): Promise<AxiosResponse<any>> {
     const testerInfo = {
       testerId: id,
       testerPassword: password,
@@ -23,7 +34,7 @@ function usePostTesterLogin() {
     return response;
   }
 
-  const { mutate: fetchTesterLogin, isLoading } = useMutation({
+  const { mutate: fetchTesterLogin, isPending } = useMutation<LoginResponse, any, LoginForm>({
     mutationFn: handleTesterLogin,
     onSuccess: (result) => {
       const { data } = result;
@@ -51,11 +62,7 @@ function usePostTesterLogin() {
     },
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return fetchTesterLogin;
+  return { fetchTesterLogin, isPending };
 }
 
 export default usePostTesterLogin;
