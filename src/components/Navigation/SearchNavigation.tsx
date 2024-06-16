@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { useSetAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +9,7 @@ function SearchNavigation() {
   const navigate = useNavigate();
   const setSearchQuery = useSetAtom(searchQueryAtom);
 
-  function handleInputChange(event) {
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const searchQuery = event.target.value;
 
     setSearchQuery(searchQuery);

@@ -5,7 +5,7 @@ import styled from "styled-components";
 function NewTestNavigation() {
   const location = useLocation();
 
-  const isHighlight = (pathSegment) => !!location.pathname.includes(pathSegment);
+  const isHighlight = (pathSegment: string) => !!location.pathname.includes(pathSegment);
 
   return (
     <Nav>
@@ -28,7 +28,11 @@ const Nav = styled.nav`
   height: 40px;
 `;
 
-const Text = styled.span`
+interface TextSpan {
+  $isHighlight: Boolean;
+}
+
+const Text = styled.span<TextSpan>`
   margin: 0 10px;
   color: ${({ $isHighlight }) => ($isHighlight ? "#133341" : "#355e70")};
   font-weight: ${({ $isHighlight }) => ($isHighlight ? "bold" : "normal")};
