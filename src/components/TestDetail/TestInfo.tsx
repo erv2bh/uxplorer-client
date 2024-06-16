@@ -16,13 +16,30 @@ import useDeleteTest from "../../apis/useDeleteTest";
 import Loading from "../shared/Loading";
 import DeleteConfirmModal from "../Modal/DeleteConfirmModal";
 
+interface TestDetail {
+  _id: string;
+  title: string;
+  description: string;
+  testUrl: string;
+  deadline: string;
+  missions: string[];
+  testers: string[];
+  owner: string;
+}
+
+interface Mission {
+  _id: string;
+  description: string;
+  expectedDuration: number;
+}
+
 function TestInfo() {
   const navigate = useNavigate();
   const { fetchDeleteTest, isPending } = useDeleteTest();
   const setTestDetail = useSetAtom(testDetailAtom);
-  const testDetail = useAtomValue(currentTestDataAtom);
+  const testDetail = useAtomValue<TestDetail>(currentTestDataAtom);
   const testerEmails = useAtomValue(testerDataAtom);
-  const missions = useAtomValue(missionsDataAtom);
+  const missions: Mission[] = useAtomValue(missionsDataAtom);
   const [showModal, setShowModal] = useState(false);
 
   const isTestExpired = new Date(testDetail.deadline) < new Date();
@@ -45,6 +62,7 @@ function TestInfo() {
       testName: testDetail.title,
       testDescription: testDetail.description,
       testUrl: testDetail.testUrl,
+      testerEmails: [],
       testDeadline: "",
     });
 

@@ -18,15 +18,13 @@ import Loading from "../../shared/Loading";
 
 function TotalResults() {
   const { isLoading } = useGetSurveyResult();
-  const { totalCompletedMissionsCount } = useAtomValue(
-    completedMissionCountAtom,
-  );
+  const { totalMissionsCount } = useAtomValue(completedMissionCountAtom);
   const testerCount = useAtomValue(testerDataAtom).length;
   const completedTesterCount = useAtomValue(completedTesterAtom).length;
 
   if (isLoading) return <Loading />;
 
-  return totalCompletedMissionsCount > 0 ? (
+  return totalMissionsCount > 0 ? (
     <>
       <TextContainer>
         <div>총 테스터: {testerCount}명</div>
