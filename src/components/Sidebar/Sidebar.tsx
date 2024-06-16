@@ -7,11 +7,11 @@ function Sidebar() {
   const navigate = useNavigate();
   const { testId } = useParams();
 
-  function isHighlight(pathSegment) {
+  function isHighlight(pathSegment: string) {
     return location.pathname.includes(`/test/${testId}/${pathSegment}`);
   }
 
-  function navigateTo(path) {
+  function navigateTo(path: string) {
     return navigate(path);
   }
 
@@ -41,7 +41,11 @@ const Nav = styled.nav`
   min-width: 200px;
 `;
 
-const Text = styled.div`
+interface TextProps {
+  $isHighlight: boolean;
+}
+
+const Text = styled.div<TextProps>`
   padding: 10px 20px;
   margin: 15px 0;
   color: ${({ $isHighlight }) => ($isHighlight ? "#fff" : "#333")};
