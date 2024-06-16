@@ -1,7 +1,13 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-function DeleteConfirmModal({ isOpen, onCancel, onConfirm }) {
+interface DeleteConfirmModalProps {
+  isOpen: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+}
+
+function DeleteConfirmModal({ isOpen, onCancel, onConfirm }: DeleteConfirmModalProps) {
   if (!isOpen) return null;
 
   return (

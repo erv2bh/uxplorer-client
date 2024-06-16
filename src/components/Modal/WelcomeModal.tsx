@@ -2,7 +2,11 @@ import styled from "styled-components";
 
 import PropTypes from "prop-types";
 
-function WelcomeModal({ onStartTest }) {
+interface WelcomeModalProps {
+  onStartTest: () => void;
+}
+
+function WelcomeModal({ onStartTest }: WelcomeModalProps) {
   return (
     <ModalBackground>
       <ModalContent>
