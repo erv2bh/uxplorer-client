@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAtom } from "jotai";
@@ -8,20 +8,23 @@ import styled from "styled-components";
 import usePostTesterLogin from "../../apis/usePostTesterLogin";
 
 import { errorMessageAtom } from "../../atoms/atoms";
+import Loading from "../shared/Loading";
 
 function Login() {
   const navigate = useNavigate();
-  const fetchTesterLogin = usePostTesterLogin();
-  const [testerId, setTesterId] = useState("");
-  const [password, setPassword] = useState("");
+  const { fetchTesterLogin, isPending } = usePostTesterLogin();
+  const [testerId, setTesterId] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useAtom(errorMessageAtom);
 
-  function handleTesterIdChange(event) {
+  if (isPending) return <Loading />
+
+  function handleTesterIdChange(event: ChangeEvent<HTMLInputElement>) {
     setTesterId(event.target.value);
     setErrorMessage("");
   }
 
-  function handleTesterPasswordChange(event) {
+  function handleTesterPasswordChange(event: ChangeEvent<HTMLInputElement>) {
     setPassword(event.target.value);
     setErrorMessage("");
   }
@@ -31,7 +34,7 @@ function Login() {
     navigate("/");
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     fetchTesterLogin({ id: testerId, password });
