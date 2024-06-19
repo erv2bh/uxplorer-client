@@ -47,8 +47,8 @@ export const currentTestDataAtom = atom<CurrentTestData>({
 });
 export const missionsDataAtom = atom([]);
 export const completedMissionCountAtom = atom({
-  completedMissionsCount: "",
-  totalMissionsCount: "",
+  completedMissionsCount: 0,
+  totalMissionsCount: 0,
 });
 export const completedMissionDataAtom = atom({});
 

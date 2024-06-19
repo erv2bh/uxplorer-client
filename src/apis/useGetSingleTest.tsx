@@ -38,7 +38,7 @@ function useGetSingleTest() {
     setCompletedTester(response.data.loggedInTesters);
     setCompletedMissionCount({
       completedMissionsCount,
-      totalMissionsCount: totalCompletedMissionsCount.toString(),
+      totalMissionsCount: totalCompletedMissionsCount,
     });
     setCompletedMissionData(response.data.completedMission);
     setCurrentTestData(response.data.test);
