@@ -1,4 +1,4 @@
-import { Chart, ArcElement, Tooltip, Legend, Title } from "chart.js";
+import { Chart, ArcElement, Tooltip, Legend, Title, Plugin, TooltipItem } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 import { useAtomValue } from "jotai";
@@ -9,12 +9,17 @@ import { completedMissionCountAtom } from "../../atoms/atoms";
 
 Chart.register(ArcElement, Tooltip, Legend, Title);
 
+interface CompletedMissionCount {
+  completedMissionsCount: number;
+  totalMissionsCount: number;
+}
+
 function TotalSuccessResult() {
-  const { completedMissionsCount, totalMissionsCount } = useAtomValue(
+  const { completedMissionsCount, totalMissionsCount } = useAtomValue<CompletedMissionCount>(
     completedMissionCountAtom,
   );
 
-  const centerTextPlugin = {
+  const centerTextPlugin: Plugin<"pie"> = {
     id: "centerText",
     afterDraw: (chart) => {
       const { ctx } = chart;
@@ -63,9 +68,9 @@ function TotalSuccessResult() {
       },
       tooltip: {
         callbacks: {
-          label(context) {
+          label(context: TooltipItem<"pie">) {
             const labelIndex = context.dataIndex;
-            const label = context.chart.data.labels[labelIndex];
+            const label = context.chart.data.labels?.[labelIndex];
 
             if (label === "성공 미션") {
               return `${context.raw}개`;

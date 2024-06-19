@@ -23,9 +23,21 @@ ChartJS.register(
   Legend,
 );
 
+interface Mission {
+  order: number;
+  expectedDuration: number;
+}
+
+interface CompletedMission {
+  order: number;
+  completedBy: {
+    duration: number;
+  };
+}
+
 function MissionTimeComparison() {
-  const missionsData = useAtomValue(missionsDataAtom);
-  const completedMissionData = useAtomValue(completedMissionDataAtom);
+  const missionsData = useAtomValue(missionsDataAtom) as Mission[];
+  const completedMissionData = useAtomValue(completedMissionDataAtom) as CompletedMission[];
 
   const expectedDurations = missionsData.map(
     (mission) => mission.expectedDuration,

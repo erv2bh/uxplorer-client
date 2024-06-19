@@ -1,4 +1,5 @@
 import { Doughnut } from "react-chartjs-2";
+import { Plugin } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import "chart.js/auto";
 
@@ -8,7 +9,18 @@ import styled from "styled-components";
 
 import { surveyResultsAtom } from "../../atoms/atoms";
 
-function calculateNPSGroups(surveyResults) {
+interface SurveyResult {
+  NPS: number;
+}
+
+interface NPSGroups {
+  promotersPercentage: number;
+  passivesPercentage: number;
+  detractorsPercentage: number;
+  npsScore: number;
+}
+
+function calculateNPSGroups(surveyResults: SurveyResult[]): NPSGroups {
   const npsScores = surveyResults.map((result) => result.NPS);
   const counts = { promoters: 0, passives: 0, detractors: 0 };
 
@@ -78,7 +90,7 @@ function NetPromoterScore() {
         font: {
           size: 20,
         },
-        formatter: (value) => `${value.toFixed(1)}%`,
+        formatter: (value: number) => `${value.toFixed(1)}%`,
       },
       title: {
         display: true,
@@ -98,7 +110,7 @@ function NetPromoterScore() {
     <>
       <NpsContainer>
         <DoughnutChartContainer>
-          <Doughnut data={data} options={options} plugins={[ChartDataLabels]} />
+          <Doughnut data={data} options={options} plugins={[ChartDataLabels as Plugin<"doughnut">]} />
         </DoughnutChartContainer>
         <NpsScoreContainer>
           <h2>NPS 점수: {npsScore.toFixed(1)}</h2>

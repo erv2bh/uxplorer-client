@@ -1,5 +1,6 @@
 import { Doughnut } from "react-chartjs-2";
-import ChartDataLabels from "chartjs-plugin-datalabels";
+import { TooltipItem, Plugin } from "chart.js";
+import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
 import "chart.js/auto";
 
 import { useAtomValue } from "jotai";
@@ -8,7 +9,11 @@ import styled from "styled-components";
 
 import { surveyResultsAtom } from "../../atoms/atoms";
 
-function calculateSUS(susScores) {
+interface SurveyResult {
+  SUS: number[];
+}
+
+function calculateSUS(susScores: number[]): number {
   const oddSum = susScores.reduce(
     (sum, score, index) => sum + (index % 2 === 0 ? score : 0),
     0,
@@ -21,7 +26,7 @@ function calculateSUS(susScores) {
 }
 
 function SystemUsabilityScale() {
-  const surveyResults = useAtomValue(surveyResultsAtom);
+  const surveyResults = useAtomValue(surveyResultsAtom) as SurveyResult[];
   const averageSUS =
     surveyResults.reduce(
       (total, result) => total + calculateSUS(result.SUS),
@@ -54,7 +59,7 @@ function SystemUsabilityScale() {
         font: {
           size: 20,
         },
-        formatter: (context) => {
+        formatter: (context: Context) => {
           if (context.dataIndex === 0) {
             return averageSUS.toFixed(1);
           }
@@ -75,11 +80,11 @@ function SystemUsabilityScale() {
       tooltip: {
         enabled: true,
         callbacks: {
-          label(context) {
+          label(context: TooltipItem<"doughnut">) {
             if (context.dataIndex === 0) {
               return `SUS 점수: ${context.parsed}`;
             }
-            return null;
+            return "";
           },
         },
       },
@@ -89,7 +94,7 @@ function SystemUsabilityScale() {
   return (
     <SusContainer>
       <DoughnutChartContainer>
-        <Doughnut data={data} options={options} plugins={[ChartDataLabels]} />
+        <Doughnut data={data} options={options} plugins={[ChartDataLabels as Plugin<"doughnut">]} />
       </DoughnutChartContainer>
       <DescriptionContainer>
         <h2>시스템 사용성 척도(System Usability Scale)</h2>
