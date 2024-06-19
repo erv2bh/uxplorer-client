@@ -1,13 +1,33 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useAtomValue } from "jotai";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { testerDataAtom } from "../../../atoms/atoms";
 import useGetTesterMissions from "../../../apis/useGetTesterMissions";
 
+type ParamsType = {
+  testId: string,
+};
+
+interface TesterInfo {
+  testerEmail: string;
+  testerId: string;
+  testerVideo?: string;
+}
+
+interface Mission {
+  missionId: string;
+  description: string;
+  completed: boolean;
+  duration: number;
+  createdAt: string;
+  completedAt: string;
+  feedback?: string;
+}
+
 function UserResults() {
-  const { testId } = useParams();
-  const testerEmailsAndIds = useAtomValue(testerDataAtom);
+  const { testId } = useParams() as ParamsType;
+  const testerEmailsAndIds: TesterInfo[] = useAtomValue(testerDataAtom);
   const [selectedTesterId, setSelectedTesterID] = useState("");
   const [selectedTesterVideo, setSelectedTesterVideo] = useState("");
   const { data: filteredMissionDetails, isLoading } = useGetTesterMissions(
@@ -15,13 +35,13 @@ function UserResults() {
     testId,
   );
 
-  function handleSelectEmail(event) {
+  function handleSelectEmail(event: ChangeEvent<HTMLSelectElement>) {
     const selectedTester = testerEmailsAndIds.find(
       (tester) => tester.testerEmail === event.target.value,
     );
 
-    setSelectedTesterID(selectedTester?.testerId);
-    setSelectedTesterVideo(selectedTester?.testerVideo);
+    setSelectedTesterID(selectedTester?.testerId || "");
+    setSelectedTesterVideo(selectedTester?.testerVideo || "");
   }
 
   return (
@@ -45,7 +65,7 @@ function UserResults() {
       </SelectContainer>
       {!isLoading &&
         filteredMissionDetails &&
-        filteredMissionDetails.map((mission, index) => (
+        filteredMissionDetails.map((mission: Mission, index: number) => (
           <MissionDetail key={mission.missionId}>
             <MissionTitle>
               {`미션 ${index + 1}`}: {mission.description}
