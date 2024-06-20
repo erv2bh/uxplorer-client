@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useDrag } from "react-use-gesture";
@@ -17,6 +17,11 @@ import {
   testerMissionsDataAtom,
 } from "../../atoms/atoms";
 
+interface Mission {
+  description: string;
+  expectedDuration?: number;
+}
+
 function MissionModal() {
   useGetSingleMission();
   const updateMissionData = usePutTesterMission();
@@ -28,10 +33,9 @@ function MissionModal() {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [missionTime, setMissionTime] = useState(0);
   const missionIds = useAtomValue(testerMissionsDataAtom);
-  const data = useAtomValue(currentMission);
+  const data = useAtomValue(currentMission) as Mission | undefined;
   const screenRecorder = useAtomValue(screenRecorderAtom);
   const [position, setPosition] = useSpring(() => ({ x: 0, y: 0 }));
-
   const DraggableModal = animated(ModalContent);
   const currentMissionIndex = missionIds.findIndex((id) => id === missionId);
 
@@ -47,7 +51,7 @@ function MissionModal() {
     setPosition({ x: offset[0], y: offset[1] });
   });
 
-  function handleFeedbackChange(event) {
+  function handleFeedbackChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setFeedback(event.target.value);
   }
 
@@ -63,7 +67,7 @@ function MissionModal() {
 
       navigate(`/tester/${testerId}/mission/${nextMissionId}`);
     } else {
-      screenRecorder.stop();
+      screenRecorder?.stop();
 
       navigate(`/tester/${testerId}/survey`);
     }
@@ -73,7 +77,7 @@ function MissionModal() {
     const now = new Date();
     const missionCompletionData = {
       completed: true,
-      createdAt: new Date(now - missionTime * 1000),
+      createdAt: new Date(now.getTime() - missionTime * 1000),
       completedAt: now,
       duration: missionTime,
       feedback,
@@ -92,7 +96,7 @@ function MissionModal() {
     const now = new Date();
     const skippedMissionData = {
       completed: false,
-      createdAt: new Date(now - missionTime * 1000),
+      createdAt: new Date(now.getTime() - missionTime * 1000),
       completedAt: now,
       feedback,
     };
