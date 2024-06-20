@@ -6,9 +6,14 @@ import fetchData from "../utils/axios";
 
 import { currentMission } from "../atoms/atoms";
 
+interface Mission {
+  description: string;
+  expectedDuration?: number;
+}
+
 function useGetSingleMission() {
   const { testerId, missionId } = useParams();
-
+  console.log(testerId);
   const setCurrentMission = useSetAtom(currentMission);
 
   async function getSingleMission() {
@@ -16,7 +21,7 @@ function useGetSingleMission() {
       "GET",
       `/testers/${testerId}/missions/${missionId}`,
     );
-
+    console.log(response.data);
     setCurrentMission(response.data);
     return response.data;
   }

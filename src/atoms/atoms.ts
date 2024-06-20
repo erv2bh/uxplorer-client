@@ -31,6 +31,11 @@ interface CurrentTestData {
   owner: string;
 }
 
+interface CurrentMission {
+  description: string;
+  expectedDuration?: number;
+}
+
 export const userAtom = atomWithStorage<UserInfo>("userInfo", {});
 
 export const currentTestIdAtom = atom("");
@@ -53,7 +58,7 @@ export const completedMissionCountAtom = atom({
 export const completedMissionDataAtom = atom({});
 
 export const testerMissionsDataAtom = atom([]);
-export const currentMission = atom([]);
+export const currentMission = atom<Mission | undefined>(undefined);
 
 export const testerAtom = atomWithStorage("testerInfo", "");
 export const testerDataAtom = atom([]);
@@ -75,7 +80,7 @@ export const missionAtom = atom<Mission[]>([
   },
 ]);
 
-export const screenRecorderAtom = atomWithStorage("isScreenRecording", "");
+export const screenRecorderAtom = atomWithStorage<MediaRecorder | null>("isScreenRecording", null);
 
 export const errorMessageAtom = atom("");
 

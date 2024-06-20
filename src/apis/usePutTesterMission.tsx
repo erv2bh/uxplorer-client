@@ -1,14 +1,27 @@
 import { useParams } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { UseMutateFunction, useMutation } from "@tanstack/react-query";
 
 import fetchData from "../utils/axios";
 
 import Loading from "../components/shared/Loading";
 
-function usePutTesterMission() {
+interface Params {
+  testerId?: string;
+  missionId?: string;
+}
+
+interface MissionData {
+  completed: boolean;
+  createdAt: Date;
+  completedAt: Date;
+  duration?: number;
+  feedback: string;
+}
+
+function usePutTesterMission(): UseMutateFunction<any, Error, MissionData, unknown> {
   const { testerId, missionId } = useParams();
 
-  async function updateMission(missionData: object) {
+  async function updateMission(missionData: MissionData) {
     const response = await fetchData(
       "PUT",
       `/testers/${testerId}/missions/${missionId}`,
@@ -18,13 +31,9 @@ function usePutTesterMission() {
     return response;
   }
 
-  const { mutate: updateMissionData, isPending } = useMutation({
+  const { mutate: updateMissionData } = useMutation({
     mutationFn: updateMission,
   });
-
-  if (isPending) {
-    return <Loading />;
-  }
 
   return updateMissionData;
 }

@@ -8,6 +8,10 @@ import { testerMissionsDataAtom } from "../atoms/atoms";
 
 import Loading from "../components/shared/Loading";
 
+interface Mission {
+  id: string;
+}
+
 function useGetAllMissions() {
   const { testerId } = useParams();
 
@@ -15,22 +19,18 @@ function useGetAllMissions() {
 
   async function getAllMissions() {
     const response = await fetchData("GET", `/testers/${testerId}/missions`);
-
+    console.log(response.data);
     setTesterMissionsData(response.data);
     return response.data;
   }
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useQuery<Mission[]>({
     queryKey: ["getAllMissions"],
     queryFn: () => getAllMissions(),
     enabled: !!testerId,
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return { data };
+  return { data, isLoading };
 }
 
 export default useGetAllMissions;
