@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, LabelHTMLAttributes, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
@@ -13,11 +13,10 @@ function Survey() {
     Array(CONSTANT.surveyQuestions.length).fill(null),
   );
   const [submitAttempted, setSubmitAttempted] = useState(false);
-  const [npsScore, setNpsScore] = useState(null);
+  const [npsScore, setNpsScore] = useState<number | null>(null);
   const { saveSurveyData, isPending } = usePostSurveys();
 
-  const handleOptionChange = (questionIndex, option) => {
-    const optionIndex = CONSTANT.surveyOptions.indexOf(option);
+  const handleOptionChange = (questionIndex: number, optionIndex: number) => {
     const updatedResponses = [...responses];
     updatedResponses[questionIndex] = optionIndex;
     setResponses(updatedResponses);
@@ -26,7 +25,7 @@ function Survey() {
   const isAllQuestionsAnswered =
     responses.every((response) => response !== null) && npsScore;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitAttempted(true);
 
@@ -61,7 +60,7 @@ function Survey() {
                       name={`question_${index}`}
                       value={option}
                       checked={responses[index] === optionIndex}
-                      onChange={() => handleOptionChange(index, option)}
+                      onChange={() => handleOptionChange(index, optionIndex)}
                     />
                     {option}
                   </OptionLabel>
@@ -152,7 +151,11 @@ const NpsOptions = styled.div`
   justify-content: space-between;
 `;
 
-const NpsOptionLabel = styled.label`
+interface NpsOptionLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
+  $isSelected: boolean;
+}
+
+const NpsOptionLabel = styled.label<NpsOptionLabelProps>`
   display: flex;
   align-items: center;
   justify-content: center;

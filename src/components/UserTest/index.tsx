@@ -9,15 +9,15 @@ import useGetAllMissions from "../../apis/useGetAllMissions";
 import startScreenRecording from "../../utils/screenRecord";
 import { screenRecorderAtom } from "../../atoms/atoms";
 import SurveyNavigation from "../Navigation/SurveyNavigation";
+import Loading from "../shared/Loading";
 
 function UserTest() {
   const navigate = useNavigate();
   const location = useLocation();
   const setRecorder = useSetAtom(screenRecorderAtom);
-  const { data } = useGetAllMissions();
+  const { data, isLoading } = useGetAllMissions();
   const { testerId } = useParams();
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
-
   const isSurveyPage = location.pathname === `/tester/${testerId}/survey`;
 
   useEffect(() => {
@@ -31,15 +31,30 @@ function UserTest() {
   async function handleStartTest() {
     setShowWelcomeModal(false);
     localStorage.setItem("isTestStarted", "true");
-    navigate(`/tester/${testerId}/mission/${data[0]}`);
 
-    try {
-      const recorderInstance = await startScreenRecording(testerId);
-
-      setRecorder(recorderInstance);
-    } catch (error) {
-      console.error("Screen recording could not be started", error);
+    if (!testerId) {
+      console.error("Tester ID is missing");
+      return;
     }
+
+    if (data && data.length > 0) {
+      navigate(`/tester/${testerId}/mission/${data[0]}`);
+
+      try {
+        const recorderInstance = await startScreenRecording(testerId);
+        if (recorderInstance) {
+          setRecorder(recorderInstance);
+        }
+      } catch (error) {
+        console.error("Screen recording could not be started", error);
+      }
+    } else {
+      console.error("No missions available");
+    }
+  }
+
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
