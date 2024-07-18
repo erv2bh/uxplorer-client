@@ -3,7 +3,7 @@
 <div align="center">
 <img width="300px" src="https://github.com/erv2bh/uxplorer-client/assets/101324787/d4461e65-deb6-4593-bda5-67fa812eba12" />
 
-UXPlorer는 테스트 유저를 테스트해 주고 기록을 분석해, 데이터를 시각화해 주는 User Test B2B SaaS 입니다.
+UXPlorer는 테스트 유저를 테스트해 주고 기록을 분석해, 데이터를 시각화해 주는 Usability Test B2B SaaS 입니다.
 
 <br>
 </div>
